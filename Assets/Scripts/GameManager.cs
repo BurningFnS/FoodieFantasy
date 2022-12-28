@@ -17,10 +17,15 @@ public class GameManager : MonoBehaviour
     public Button resumeButton;
     public float timeBetweenFood = 1.0f;
 
+    float GameHeight;
+    float GameWidth;
+    private float maxX;
+    private float maxY;
+
 
     void Awake()
     {
-        startingLine = new Vector3(Random.Range(-2.2f, 2.2f), 5.7f, 0f);
+        startingLine = new Vector3(Random.Range(-maxX, maxX), 6.2f, 0f);
     }
 
     // Start is called before the first frame update
@@ -29,17 +34,19 @@ public class GameManager : MonoBehaviour
         isGameRunning = GameLoop();
         StartCoroutine(isGameRunning);
 
-        Button pausebtn = pauseButton.GetComponent<Button>();
-        pausebtn.onClick.AddListener(pausing);
+        CalculateGameDimensions();
 
-        Button resumebtn = resumeButton.GetComponent<Button>();
-        resumebtn.onClick.AddListener(resume);
+        //Button pausebtn = pauseButton.GetComponent<Button>();
+        //pausebtn.onClick.AddListener(pausing);
+
+        //Button resumebtn = resumeButton.GetComponent<Button>();
+        //resumebtn.onClick.AddListener(resume);
     }
 
     // Update is called once per frame
     void Update()
     {
-        startingLine = new Vector3(Random.Range(-2.2f, 2.2f), 5.7f, 0f);
+        startingLine = new Vector3(Random.Range(-maxX, maxX), maxY + 0.5f, 0f);
 
 
         /*------------------------------OLD PAUSE BUTTON----------------------------*/
@@ -78,6 +85,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game is resumed!");
         StartCoroutine(isGameRunning);
 
+    }
+
+    public void CalculateGameDimensions()
+    {
+        GameHeight = Camera.main.orthographicSize * 2f;
+        GameWidth = Camera.main.aspect * GameHeight;
+
+        maxX = GameWidth / 2 + 0.5f;
+        maxY = GameHeight / 2;
     }
 
 }
