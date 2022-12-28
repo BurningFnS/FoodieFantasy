@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: objects
+    uniqueID: 3649981591
+    locked: 0
+  - name: lose screen
+    uniqueID: 1405897341
+    locked: 0

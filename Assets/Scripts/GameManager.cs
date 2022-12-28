@@ -9,16 +9,13 @@ public class GameManager : MonoBehaviour
     IEnumerator isGameRunning; //This variable can change name. It is necessary to "pause" the loop because if u directly pause it, it will start from initial.
     [SerializeField]
     private GameObject[] groceriesList;
-    [SerializeField]
-    private GameObject[] junkList;
-    [SerializeField]
-    private GameObject[] baditemList;
 
     [HideInInspector]
     public bool endGame = false;
 
     public Button pauseButton;
     public Button resumeButton;
+    public float timeBetweenFood = 1.0f;
 
 
     void Awake()
@@ -64,13 +61,7 @@ public class GameManager : MonoBehaviour
         while (endGame == false)
         {
             Instantiate(groceriesList[Random.Range(0, groceriesList.Length)], startingLine, Quaternion.identity);
-            yield return new WaitForSeconds(1.7f); // DELAY FOR EACH INSTANTIATE 
-
-            Instantiate(junkList[Random.Range(0, junkList.Length)], startingLine, Quaternion.identity);
-            yield return new WaitForSeconds(2.3f); // DELAY FOR EACH INSTANTIATE 
-
-            Instantiate(baditemList[Random.Range(0, baditemList.Length)], startingLine, Quaternion.identity);
-            yield return new WaitForSeconds(2.3f); // DELAY FOR EACH INSTANTIATE 
+            yield return new WaitForSeconds(timeBetweenFood); // DELAY FOR EACH INSTANTIATE 
 
             Debug.Log("Game is running");
             yield return new WaitForSeconds(1f);

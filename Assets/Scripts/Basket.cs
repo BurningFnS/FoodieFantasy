@@ -7,8 +7,6 @@ public class Basket : MonoBehaviour
 {
     public GameManager gamemanager;
 
-    public Image Lose;
-
     public float speed = 10f;
 
     private List<string> ItemList = new List<string>();
@@ -40,41 +38,6 @@ public class Basket : MonoBehaviour
             Debug.Log("ItemList Count: " + ItemList.Count);
             Destroy(other.gameObject);
 
-            if (ItemList.Count > 15)
-            {
-                Debug.Log("You have severely overbought. Please KYS");
-                Lose.gameObject.SetActive(true);
-                gamemanager.endGame = true;
-            }
-        }
-
-        if (other.gameObject.tag == "Junk")
-        {
-            JunkList.Add(gameObject.name);
-            Debug.Log("JunkList Count: " + JunkList.Count);
-            Destroy(other.gameObject);
-
-            if (JunkList.Count >= 3)
-            {
-                Debug.Log("You Lost! Too much junk food");
-                Lose.gameObject.SetActive(true);
-                gamemanager.endGame = true;
-
-            }
-        }
-
-        if (other.gameObject.tag == "Inedible")
-        {
-
-            BadItemsList.Add(gameObject.name);
-            Debug.Log("BadItemsList Count: " + BadItemsList.Count);
-            Destroy(other.gameObject);
-
-            if (BadItemsList.Count >= 3)
-            {
-                Debug.Log("-1 point");
-
-            }
         }
     }
 }
