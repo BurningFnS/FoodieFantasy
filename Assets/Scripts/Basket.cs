@@ -9,6 +9,8 @@ public class Basket : MonoBehaviour
 
     public Image Lose;
 
+    public float speed = 10f;
+
     private List<string> ItemList = new List<string>();
     private List<string> JunkList = new List<string>();
     private List<string> BadItemsList = new List<string>();
@@ -21,7 +23,13 @@ public class Basket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        BasketMovement();
+    }
 
+    void BasketMovement()
+    {
+        Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f, 0.0f);
+        transform.position += horizontal * speed * Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D other)
