@@ -8,6 +8,7 @@ public class Basket : MonoBehaviour
     public GameManager gamemanager;
 
     public float speed = 10f;
+    bool isMoving = false;
 
     Rigidbody2D rb;
 
@@ -29,8 +30,26 @@ public class Basket : MonoBehaviour
     void BasketMovement()
     {
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        if(isMoving == false)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
+        }
         
-        rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
+        
         //transform.position += horizontal * speed * Time.deltaTime;
     }
 

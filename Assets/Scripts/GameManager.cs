@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         GameHeight = Camera.main.orthographicSize * 2f;
         GameWidth = Camera.main.aspect * GameHeight;
 
-        maxX = GameWidth / 2 + 0.1f;
+        maxX = GameWidth / 2 - 1f;
         maxY = GameHeight / 2;
     }
 
