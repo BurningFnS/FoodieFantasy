@@ -29,7 +29,15 @@ public class Basket : MonoBehaviour
     void BasketMovement()
     {
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
+        
+        //if (horizontal.x == 0)
+        //{
+        //    speed = 0f;
+        //}
+        //else
+        //{
+            rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
+        //}
         //transform.position += horizontal * speed * Time.deltaTime;
     }
 
