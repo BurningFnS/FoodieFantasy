@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6526242606653771824}
   - component: {fileID: -3342200799222721424}
   - component: {fileID: -8871455558588299098}
+  - component: {fileID: -1990731656561249428}
   m_Layer: 0
   m_Name: Eggs
   m_TagString: Food
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-1990731656561249428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526242606653771825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3029d6c761ecf4d4b930c62f0cf9ab6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 0.724

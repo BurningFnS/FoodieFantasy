@@ -12,13 +12,14 @@ public class Basket : MonoBehaviour
 
     Rigidbody2D rb;
 
-    private List<string> ItemList = new List<string>();
-    private List<string> JunkList = new List<string>();
-    private List<string> BadItemsList = new List<string>();
+    //private List<string> ItemList = new List<string>();
+    private List<GameObject> groceryList;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        groceryList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class Basket : MonoBehaviour
     {
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
 
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
             isMoving = true;
         }
@@ -57,8 +58,14 @@ public class Basket : MonoBehaviour
     {
         if (other.gameObject.tag == "Food")
         {
-            ItemList.Add(gameObject.name);
-            Debug.Log("ItemList Count: " + ItemList.Count);
+            //ItemList.Add(gameObject.name);
+            //Debug.Log("ItemList Count: " + ItemList.Count);
+
+            groceryList.Add(other.gameObject);
+
+            Debug.Log(string.Join(", ", groceryList));
+            Debug.Log("Grocery Count: " + groceryList.Count);
+
             Destroy(other.gameObject);
 
         }
