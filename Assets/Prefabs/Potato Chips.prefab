@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4593126470037582520}
   - component: {fileID: -1564141061127087916}
   - component: {fileID: -4936823691138163304}
+  - component: {fileID: -8933015208719465127}
   m_Layer: 0
   m_Name: Potato Chips
   m_TagString: Food
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 4593126470037582523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.37, y: 0, z: 0}
-  m_LocalScale: {x: 0.43431, y: 0.43431, z: 0.43431}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.38, y: 0.38, z: 0.38}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8933015208719465127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593126470037582523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3029d6c761ecf4d4b930c62f0cf9ab6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 0.911

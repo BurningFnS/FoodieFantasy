@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6365739274451866566}
   - component: {fileID: 3850795740279878442}
   - component: {fileID: 2637475816744079511}
+  - component: {fileID: -1108663943128425863}
   m_Layer: 0
   m_Name: Pickles
   m_TagString: Food
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-1108663943128425863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365739274451866567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3029d6c761ecf4d4b930c62f0cf9ab6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 0.574

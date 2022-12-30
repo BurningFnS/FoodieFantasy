@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6809553680521362944}
   - component: {fileID: -7307774229186377980}
   - component: {fileID: -2789603951075581708}
+  - component: {fileID: 467805935458231502}
   m_Layer: 0
   m_Name: Baguette
   m_TagString: Food
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &467805935458231502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809553680521362945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3029d6c761ecf4d4b930c62f0cf9ab6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 0.724

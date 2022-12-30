@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2218258286095710104}
   - component: {fileID: -1025972701710470277}
   - component: {fileID: -2926114412779800968}
+  - component: {fileID: -146108461645963119}
   m_Layer: 0
   m_Name: Chilli Sauce
   m_TagString: Food
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-146108461645963119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2218258286095710107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3029d6c761ecf4d4b930c62f0cf9ab6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 0.911

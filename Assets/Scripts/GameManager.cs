@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool endGame = false;
 
-    public Button pauseButton;
-    public Button resumeButton;
     public float timeBetweenFood = 1.0f;
 
     float GameHeight;
@@ -75,17 +73,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void pausing()
-    {
-        Debug.Log("Game is paused!");
-        StopCoroutine(isGameRunning);
-    }
-    void resume()
-    {
-        Debug.Log("Game is resumed!");
-        StartCoroutine(isGameRunning);
-
-    }
 
     public void CalculateGameDimensions()
     {
