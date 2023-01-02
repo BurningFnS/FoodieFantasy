@@ -28,7 +28,8 @@ public class DeathZone : MonoBehaviour
             Debug.Log(string.Join(", ", wastedFoodList));
             Debug.Log("Food Wasted Count: " + wastedFoodList.Count);
 
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
 
         }
     }
