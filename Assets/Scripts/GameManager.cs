@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
         playerPosition = player.transform.position;
         platformLength = platform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         Spawn();
+
+        player.SetActive(false);
     }
 
     // Update is called once per frame
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
                 dropperCamera.SetActive(false);
                 dropperCanvas.SetActive (false);
                 platformerCanvas.SetActive (true);
+                player.SetActive(true);
             }
         }
 

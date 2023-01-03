@@ -1,15 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public bool facingRight = true;
     [HideInInspector] public bool jump = false;
 
+    public TextMeshProUGUI TimingText, FullnessText;
+
     public float moveForce = 365f;
     public float maxSpeed = 5f;
     public float jumpForce = 1000f;
+
+    public float boostTimer = 3.0f;
+    public bool isBoostTimer = false;
+    public int fullnessPercentage;
+    public float timeRemaining;
+
     public Transform groundCheck;
 
     private bool grounded = false;
@@ -19,6 +28,8 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        timeRemaining = 60f;
+        fullnessPercentage = 0;
     }
 
     // Start is called before the first frame update
@@ -37,6 +48,19 @@ public class PlayerController : MonoBehaviour
             jump = true;
         }
 
+        if (isBoostTimer)
+        {
+            boostTimer -= Time.smoothDeltaTime;
+            jumpForce = 550f;
+        }
+        if (boostTimer <= 0f)
+        {
+            jumpForce = 350f;
+            boostTimer = 3.0f;
+            isBoostTimer = false;
+        }
+        TimingText.text = "Time Remaining: " + Mathf.RoundToInt(timeRemaining -= Time.smoothDeltaTime);
+        FullnessText.text = "Fullness: " + fullnessPercentage;
     }
     void FixedUpdate()
     {
@@ -68,5 +92,27 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.layer == 10)
+        {
+            if (isBoostTimer)
+            {
+                boostTimer += 3.0f;
+                collider.gameObject.SetActive(false);
+            }
+            else
+            {
+                isBoostTimer = true;
+                collider.gameObject.SetActive(false);
+            }
+        }
+        if (collider.gameObject.tag == "Food")
+        {
+            fullnessPercentage += 5;
+            collider.gameObject.SetActive(false);
+        }
     }
 }
