@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         DisplayTime(timeLeft);
 
         playerPosition = player.transform.position;
-        if (playerPosition.x > (platformSpawn[maxPlatforms - 1].transform.position.x - platformLength))
+        if (playerPosition.x > (platformSpawn[maxPlatforms - 10].transform.position.x - platformLength))
         {
             lastPlatformPosition = randomPosition;
             Spawn();
@@ -142,7 +142,12 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < maxPlatforms; i++)
         {
-            randomPosition = new Vector2(lastPlatformPosition.x + platformLength, lastPlatformPosition.y) + new Vector2(Random.Range(horizontalMin, horizontalMax), Random.Range(verticalMin, verticalMax));
+            //randomPosition = new Vector2(lastPlatformPosition.x + platformLength, lastPlatformPosition.y) + new Vector2(Random.Range(horizontalMin, horizontalMax), Random.Range(verticalMin, verticalMax));
+            //platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
+            //lastPlatformPosition = randomPosition;
+            randomPosition = lastPlatformPosition;
+            randomPosition.x += Random.Range(horizontalMin, horizontalMax);
+            randomPosition.y += Random.Range(verticalMin, verticalMax);
             platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
             lastPlatformPosition = randomPosition;
         }
