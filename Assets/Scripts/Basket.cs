@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Basket : MonoBehaviour
 {
     public GameManager gamemanager;
+    public TextMeshProUGUI groceryListUI;
 
     public float speed = 10f;
     bool isMoving = false;
@@ -65,6 +66,7 @@ public class Basket : MonoBehaviour
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
+            groceryListUI.text = groceryList.ToString();
 
             Destroy(other.gameObject);
 
