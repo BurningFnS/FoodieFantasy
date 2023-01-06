@@ -10,6 +10,6 @@ public class Background : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 3.197262f);
+        this.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 3f);
     }
 }
