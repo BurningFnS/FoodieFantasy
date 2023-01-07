@@ -66,7 +66,7 @@ public class Basket : MonoBehaviour
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
-            groceryListUI.text = groceryList.ToString();
+            groceryListUI.text = string.Join(", ", groceryList);
 
             Destroy(other.gameObject);
 
