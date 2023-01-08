@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private Vector3 startingLine;
-    IEnumerator isGameRunning; //This variable can change name. It is necessary to "pause" the loop because if u directly pause it, it will start from initial.
+    IEnumerator isDropperRunning; //This variable can change name. It is necessary to "pause" the loop because if u directly pause it, it will start from initial.
     [SerializeField]
     private GameObject[] groceriesList;
 
@@ -15,11 +15,34 @@ public class GameManager : MonoBehaviour
 
     public float timeBetweenFood = 1.0f;
 
+    public float timeLeft = 30f;
+    private bool timerIsRunning = false;
+    public Text timerText;
+
     float GameHeight;
     float GameWidth;
     private float maxX;
     private float maxY;
 
+    public GameObject dropperCamera;
+    public GameObject platformerCamera;
+    public GameObject dropperCanvas;
+    public GameObject platformerCanvas;
+
+    [HideInInspector] public float platformLength;
+    public int maxPlatforms = 40;
+    public GameObject platform;
+
+    public float horizontalMin = 4f;
+    public float horizontalMax = 8f;
+    public float verticalMin = 0f;
+    public float verticalMax = 4f;
+
+    private Vector2 lastPlatformPosition;
+    public GameObject player;
+    private Vector2 playerPosition;
+    private Vector2 randomPosition;
+    private GameObject[] platformSpawn;
 
     void Awake()
     {
@@ -29,16 +52,24 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGameRunning = GameLoop();
-        StartCoroutine(isGameRunning);
+        isDropperRunning = GameLoop();
+        StartCoroutine(isDropperRunning);
 
         CalculateGameDimensions();
 
-        //Button pausebtn = pauseButton.GetComponent<Button>();
-        //pausebtn.onClick.AddListener(pausing);
+        timerIsRunning = true;
 
-        //Button resumebtn = resumeButton.GetComponent<Button>();
-        //resumebtn.onClick.AddListener(resume);
+        dropperCamera.SetActive(true);
+        platformerCamera.SetActive(false);
+        dropperCanvas.SetActive(true);
+        platformerCanvas.SetActive(false);
+
+        lastPlatformPosition = new Vector2(0, 45.76f);
+        playerPosition = player.transform.position;
+        platformLength = platform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        Spawn();
+
+        player.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,19 +77,35 @@ public class GameManager : MonoBehaviour
     {
         startingLine = new Vector3(Random.Range(-maxX, maxX), maxY + 0.5f, 0f);
 
+        if (timerIsRunning)
+        {
+            if (timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+            }
+            else
+            {
+                timeLeft = 0;
+                Debug.Log("Timer over hahahhaha");
+                timerIsRunning = false;
+                StopCoroutine(isDropperRunning);
 
-        /*------------------------------OLD PAUSE BUTTON----------------------------*/
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    Debug.Log("Game Loop Has been resumed");
-        //    StartCoroutine(isGameRunning);
-        //}
+                platformerCamera.SetActive(true);
+                dropperCamera.SetActive(false);
+                dropperCanvas.SetActive (false);
+                platformerCanvas.SetActive (true);
+                player.SetActive(true);
+            }
+        }
 
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    Debug.Log("Game Loop Has been paused");
-        //    StopCoroutine(isGameRunning);
-        //}   
+        DisplayTime(timeLeft);
+
+        playerPosition = player.transform.position;
+        if (playerPosition.x > (platformSpawn[maxPlatforms - 10].transform.position.x - platformLength))
+        {
+            lastPlatformPosition = randomPosition;
+            Spawn();
+        }
     }
 
     IEnumerator GameLoop()
@@ -69,7 +116,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenFood); // DELAY FOR EACH INSTANTIATE 
 
             Debug.Log("Game is running");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -81,6 +128,29 @@ public class GameManager : MonoBehaviour
 
         maxX = GameWidth / 2 - 1f;
         maxY = GameHeight / 2;
+    }
+    
+    public void DisplayTime(float displayedTimeRemaining)
+    {
+        float seconds = Mathf.FloorToInt(displayedTimeRemaining);
+        timerText.text = "Time Left: "+ seconds.ToString();
+    }
+
+    void Spawn()
+    {
+        platformSpawn = new GameObject[maxPlatforms];
+
+        for (int i = 0; i < maxPlatforms; i++)
+        {
+            //randomPosition = new Vector2(lastPlatformPosition.x + platformLength, lastPlatformPosition.y) + new Vector2(Random.Range(horizontalMin, horizontalMax), Random.Range(verticalMin, verticalMax));
+            //platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
+            //lastPlatformPosition = randomPosition;
+            randomPosition = lastPlatformPosition;
+            randomPosition.x += Random.Range(horizontalMin, horizontalMax);
+            randomPosition.y += Random.Range(verticalMin, verticalMax);
+            platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
+            lastPlatformPosition = randomPosition;
+        }
     }
 
 }
