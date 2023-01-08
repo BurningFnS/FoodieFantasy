@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - PlatformerCamera
+  - Ground
   layers:
   - Default
   - TransparentFX
