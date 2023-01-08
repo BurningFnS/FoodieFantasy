@@ -14,11 +14,20 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 5f;
     public float jumpForce = 1000f;
 
-    public float boostTimer = 3.0f;
-    public bool isBoostTimer = false;
     public int fullnessPercentage;
     public float timeRemaining;
 
+    //These variables are for power ups
+    //Jump boost
+    private float jumpBoostTimer = 3.0f;
+    private bool isBoostTimer = false;
+
+    //Double Jump
+    private float doubleJumpTimer = 3.0f;
+    private bool isDoubleJumpTrue = false;
+    private bool hasDoubleJumped = false;
+
+    //---------------------------------//
     public Transform groundCheck;
 
     private bool grounded = false;
@@ -43,22 +52,51 @@ public class PlayerController : MonoBehaviour
     {
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-        if (Input.GetButtonDown("Jump") && grounded)
-        {
-            jump = true;
-        }
 
+
+        //-------Double Jump------//
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (isDoubleJumpTrue && (hasDoubleJumped == false))
+            {
+                jump = true;
+                if(Input.GetButtonDown("Jump") && (jump == false))
+                {
+                    hasDoubleJumped = true;
+                    jump = true;
+                }
+            }
+            else if (grounded)
+            {
+                jump = true;
+            }
+        }
+        if (isDoubleJumpTrue)
+        {
+            doubleJumpTimer -= Time.smoothDeltaTime;
+        }
+        if (doubleJumpTimer <= 0f)
+        {
+            isDoubleJumpTrue = false;
+        }
+        //-----------------------//
+
+
+        //-------Jump boost------//
         if (isBoostTimer)
         {
-            boostTimer -= Time.smoothDeltaTime;
+            jumpBoostTimer -= Time.smoothDeltaTime;
             jumpForce = 550f;
         }
-        if (boostTimer <= 0f)
+        if (jumpBoostTimer <= 0f)
         {
             jumpForce = 350f;
-            boostTimer = 3.0f;
+            jumpBoostTimer = 3.0f;
             isBoostTimer = false;
         }
+        //-----------------------//
+
         TimingText.text = "Time Remaining: " + Mathf.RoundToInt(timeRemaining -= Time.smoothDeltaTime);
         FullnessText.text = "Fullness: " + fullnessPercentage;
     }
@@ -83,6 +121,11 @@ public class PlayerController : MonoBehaviour
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
+            //This is to reset the double jump powerup
+            if (hasDoubleJumped && grounded)
+            {
+                hasDoubleJumped = false;
+            }
         }
     }
 
@@ -95,12 +138,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
+        //This colliderEnter checks for power ups and food triggers
     {
+        // Layer 10 is jump boost food
         if(collider.gameObject.layer == 10)
         {
             if (isBoostTimer)
             {
-                boostTimer += 3.0f;
+                jumpBoostTimer += 3.0f;
                 collider.gameObject.SetActive(false);
             }
             else
@@ -109,6 +154,21 @@ public class PlayerController : MonoBehaviour
                 collider.gameObject.SetActive(false);
             }
         }
+
+        // Layer 11 is Double Jump food
+        if (collider.gameObject.layer == 11)
+        {
+            if (isDoubleJumpTrue)
+            {
+                doubleJumpTimer += 3.0f;
+            }
+            else
+            {
+                isDoubleJumpTrue = true;
+            }
+        }
+
+        // General food collection
         if (collider.gameObject.tag == "Food")
         {
             fullnessPercentage += 5;
