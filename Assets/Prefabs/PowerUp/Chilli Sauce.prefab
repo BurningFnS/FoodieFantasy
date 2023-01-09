@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1025972701710470277}
   - component: {fileID: -2926114412779800968}
   - component: {fileID: -146108461645963119}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chilli Sauce
   m_TagString: Food
   m_Icon: {fileID: 0}
