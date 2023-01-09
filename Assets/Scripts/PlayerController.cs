@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     public int fullnessPercentage;
     public float timeRemaining;
 
+    public bool canJump = true;
+
+
     //These variables are for power ups
     //Jump boost
     private float jumpBoostTimer = 3.0f;
@@ -123,11 +126,12 @@ public class PlayerController : MonoBehaviour
         else if (h < 0 && facingRight)
             Flip();
 
-        if (jump)
+        if (jump &&canJump)
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
+            canJump = false;
         }
 
         //This is to reset the double jump powerup

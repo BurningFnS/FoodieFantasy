@@ -152,5 +152,4 @@ public class GameManager : MonoBehaviour
             lastPlatformPosition = randomPosition;
         }
     }
-
 }
