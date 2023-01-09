@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8446583039006413978}
   - component: {fileID: 7273365674666031373}
   - component: {fileID: -3147021777624660928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Worchestershire sauce
   m_TagString: Food
   m_Icon: {fileID: 0}
