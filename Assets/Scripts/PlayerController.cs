@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public bool isBoostTimer = false;
     public int fullnessPercentage;
     public float timeRemaining;
-
+    public bool canJump = true;
     public Transform groundCheck;
 
     private bool grounded = false;
@@ -78,11 +78,12 @@ public class PlayerController : MonoBehaviour
         else if (h < 0 && facingRight)
             Flip();
 
-        if (jump)
+        if (jump &&canJump)
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
+            canJump = false;
         }
     }
 
