@@ -129,6 +129,12 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
         }
+
+        //This is to reset the double jump powerup
+        if (hasDoubleJumped && grounded)
+        {
+            hasDoubleJumped = false;
+        }
     }
 
     void Flip()
