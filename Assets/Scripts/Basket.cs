@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Basket : MonoBehaviour
 {
@@ -11,15 +11,18 @@ public class Basket : MonoBehaviour
     bool isMoving = false;
 
     Rigidbody2D rb;
+    public TextMeshProUGUI groceryListUI;
 
     //private List<string> ItemList = new List<string>();
     private List<GameObject> groceryList;
+    private List<object> foodList;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         groceryList = new List<GameObject>();
+        foodList = new List<object>();
     }
 
     // Update is called once per frame
@@ -62,9 +65,11 @@ public class Basket : MonoBehaviour
             //Debug.Log("ItemList Count: " + ItemList.Count);
 
             groceryList.Add(other.gameObject);
+            foodList.Add(other.gameObject.name);
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
+            groceryListUI.text = string.Join(",", foodList);
 
             Destroy(other.gameObject);
 

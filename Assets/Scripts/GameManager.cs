@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
 
     public float timeBetweenFood = 1.0f;
 
-    public float timeLeft = 30f;
-    private bool timerIsRunning = false;
-    public Text timerText;
+    //public float timeLeft = 30f;
+    //private bool timerIsRunning = false;
+    //public Text timerText;
 
     float GameHeight;
     float GameWidth;
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 
         CalculateGameDimensions();
 
-        timerIsRunning = true;
+        //timerIsRunning = true;
 
         dropperCamera.SetActive(true);
         platformerCamera.SetActive(false);
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         startingLine = new Vector3(Random.Range(-maxX, maxX), maxY + 0.5f, 0f);
 
-        if (timerIsRunning)
+        /*if (timerIsRunning)
         {
             if (timeLeft > 0)
             {
@@ -96,9 +96,9 @@ public class GameManager : MonoBehaviour
                 platformerCanvas.SetActive (true);
                 player.SetActive(true);
             }
-        }
+        }*/
 
-        DisplayTime(timeLeft);
+        //DisplayTime(timeLeft);
 
         playerPosition = player.transform.position;
         if (playerPosition.x > (platformSpawn[maxPlatforms - 10].transform.position.x - platformLength))
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     public void DisplayTime(float displayedTimeRemaining)
     {
         float seconds = Mathf.FloorToInt(displayedTimeRemaining);
-        timerText.text = "Time Left: "+ seconds.ToString();
+        //timerText.text = "Time Left: "+ seconds.ToString();
     }
 
     void Spawn()
