@@ -12,8 +12,12 @@ public class Basket : MonoBehaviour
 
     Rigidbody2D rb;
 
+    Groceries groceries;
+
     //private List<string> ItemList = new List<string>();
     private List<GameObject> groceryList;
+
+    public Text capacityText;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +66,16 @@ public class Basket : MonoBehaviour
             //Debug.Log("ItemList Count: " + ItemList.Count);
 
             groceryList.Add(other.gameObject);
+
+            groceries = other.gameObject.GetComponent<Groceries>();
+
+            float s = groceries.size;
+
+            float cap = 100;
+
+            cap -= s;
+
+            capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);

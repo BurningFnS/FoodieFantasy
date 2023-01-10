@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded = false;
     //private Animator anim;
     private Rigidbody2D rb2d;
+    private Animator anim;
 
     void Awake()
     {
@@ -46,13 +47,21 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        anim = GetComponent<Animator>();
+        anim.SetTrigger("idle");
     }
 
     // Update is called once per frame
     void Update()
     {
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+        //checks 3 variables to properly implement her idle form after jumping
+        if(grounded && rb2d.velocity.y == 0 && jump == false)
+        {
+            anim.SetBool("isJump", false);
+        }
 
         //-------Double Jump------//
 
@@ -61,15 +70,18 @@ public class PlayerController : MonoBehaviour
             if (isDoubleJumpTrue && (hasDoubleJumped == false))
             {
                 jump = true;
+                anim.SetBool("isJump", true);
                 if (Input.GetButtonDown("Jump"))
                 {
                     hasDoubleJumped = true;
                     jump = true;
+                    anim.SetBool("isJump", true);
                 }
             }
             else if (grounded)
             {
                 jump = true;
+                anim.SetBool("isJump", true);
             }
         }
         if (isDoubleJumpTrue)
@@ -111,6 +123,14 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
+        if(h != 0 && !anim.GetBool("isJump"))
+        {
+            anim.SetBool("isRun", true);
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
         //anim.SetFloat("Speed", Mathf.Abs(h));
 
         if (h * rb2d.velocity.x < maxSpeed)
@@ -129,7 +149,7 @@ public class PlayerController : MonoBehaviour
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
-            
+
         }
 
         //This is to reset the double jump powerup
