@@ -6,16 +6,22 @@ using UnityEngine.UI;
 public class Basket : MonoBehaviour
 {
     public GameManager gamemanager;
+    private GameObject[] platformSpawn;
+    public int maxPlatforms;
+    public List<Vector2> platformList;
 
     public float speed = 10f;
     bool isMoving = false;
 
+    float cap = 100;
+
     Rigidbody2D rb;
+    Rigidbody2D groceryrb2d;
 
     Groceries groceries;
 
     //private List<string> ItemList = new List<string>();
-    private List<GameObject> groceryList;
+    public List<GameObject> groceryList;
 
     public Text capacityText;
 
@@ -24,6 +30,9 @@ public class Basket : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         groceryList = new List<GameObject>();
+        platformSpawn = gamemanager.platformSpawn;
+        maxPlatforms = gamemanager.maxPlatforms;
+        platformList = gamemanager.platformList;
     }
 
     // Update is called once per frame
@@ -68,10 +77,10 @@ public class Basket : MonoBehaviour
             groceryList.Add(other.gameObject);
 
             groceries = other.gameObject.GetComponent<Groceries>();
+            groceryrb2d = other.gameObject.GetComponent<Rigidbody2D>();
 
             float s = groceries.size;
 
-            float cap = 100;
 
             cap -= s;
 
@@ -80,8 +89,24 @@ public class Basket : MonoBehaviour
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
 
-            Destroy(other.gameObject);
+            //platformSpawn = new GameObject[maxPlatforms];
+            for (int i = 0; i < platformList.Count; i++)
+            {
 
+                //Debug.Log(platformSpawn[i].transform.position);
+
+                for (int j = 0; j < groceryList.Count; j++)
+                {
+                    if(i == j)
+                    {
+                        other.gameObject.transform.position = new Vector2(platformList[i].x, platformList[i].y + 1f);
+                        groceries.enabled = false;
+                        other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    }
+                }
+
+            }
+            
         }
     }
 }

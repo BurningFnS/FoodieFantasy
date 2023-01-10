@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject platformerCanvas;
 
     [HideInInspector] public float platformLength;
-    public int maxPlatforms = 40;
+    public int maxPlatforms = 20;
     public GameObject platform;
 
     public float horizontalMin = 4f;
@@ -38,11 +38,14 @@ public class GameManager : MonoBehaviour
     public float verticalMin = 0f;
     public float verticalMax = 4f;
 
-    private Vector2 lastPlatformPosition;
+    [HideInInspector]
+    public Vector2 lastPlatformPosition;
     public GameObject player;
     private Vector2 playerPosition;
     private Vector2 randomPosition;
-    private GameObject[] platformSpawn;
+    [HideInInspector]
+    public GameObject[] platformSpawn;
+    public List <Vector2> platformList;
 
     void Awake()
     {
@@ -150,6 +153,8 @@ public class GameManager : MonoBehaviour
             randomPosition.y += Random.Range(verticalMin, verticalMax);
             platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
             lastPlatformPosition = randomPosition;
+            platformList.Add(lastPlatformPosition);
+
         }
     }
 }

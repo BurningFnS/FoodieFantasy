@@ -396,20 +396,21 @@ MonoBehaviour:
   - {fileID: 1015355063620859022, guid: ad921a248b473d34da87002b9bbed20d, type: 3}
   endGame: 0
   timeBetweenFood: 0.7
-  timeLeft: 5
+  timeLeft: 10
   timerText: {fileID: 1230428360}
   dropperCamera: {fileID: 519420028}
   platformerCamera: {fileID: 1648324069}
   dropperCanvas: {fileID: 893871811}
   platformerCanvas: {fileID: 1021503330}
   platformLength: 0
-  maxPlatforms: 40
+  maxPlatforms: 20
   platform: {fileID: 6196712304465112835, guid: 47f03588b4d42264cbaf62fccacd155a, type: 3}
   horizontalMin: -4
   horizontalMax: 4
   verticalMin: 1
   verticalMax: 2.5
   player: {fileID: 535342608}
+  platformSpawn: []
 --- !u!4 &336811394
 Transform:
   m_ObjectHideFlags: 0
@@ -662,7 +663,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamemanager: {fileID: 336811393}
+  maxPlatforms: 0
   speed: 10
+  groceryList: []
   capacityText: {fileID: 371321486}
 --- !u!61 &447105166
 BoxCollider2D:
