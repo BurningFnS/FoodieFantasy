@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
-            fullnessPercentage += 50;
+            fullnessPercentage += 15;
             collider.gameObject.SetActive(false);
         }
     }
