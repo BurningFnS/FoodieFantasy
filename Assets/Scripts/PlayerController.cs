@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerController : MonoBehaviour
@@ -17,7 +18,6 @@ public class PlayerController : MonoBehaviour
     public int fullnessPercentage;
     public float timeRemaining;
 
-
     //These variables are for power ups
     //Jump boost
     private float jumpBoostTimer = 3.0f;
@@ -29,30 +29,44 @@ public class PlayerController : MonoBehaviour
     private bool hasDoubleJumped = false;
 
     //---------------------------------//
-
     public Transform groundCheck;
 
     private bool grounded = false;
     //private Animator anim;
     private Rigidbody2D rb2d;
 
+    [SerializeField]
+    Text _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage;
+    [SerializeField]
+    RectTransform _PanelEnd, _PanelStart;
+    [SerializeField]
+    Button _Continue;
+
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        timeRemaining = 60f;
+        timeRemaining = 10f;
         fullnessPercentage = 0;
+
+        _PanelEnd.gameObject.SetActive(false);
+        _PanelStart.gameObject.SetActive(true);
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Button continueBtn = _Continue.GetComponent<Button>();
+        continueBtn.onClick.AddListener(Resume);
     }
 
     // Update is called once per frame
     void Update()
     {
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+
 
         //-------Double Jump------//
 
@@ -83,6 +97,7 @@ public class PlayerController : MonoBehaviour
         }
         //-----------------------//
 
+
         //-------Jump boost------//
         if (isBoostTimer)
         {
@@ -97,16 +112,33 @@ public class PlayerController : MonoBehaviour
         }
         //-----------------------//
 
-        if(timeRemaining > 0)
+        FullnessText.text = "Fullness: " + fullnessPercentage;
+
+        if (timeRemaining > 0)
         {
             TimingText.text = "Time Remaining: " + Mathf.RoundToInt(timeRemaining -= Time.smoothDeltaTime);
         }
         else
         {
-            // This 
-            Debug.Log("Time is up");
+            Time.timeScale = 0f;
+
+            _PanelEnd.gameObject.SetActive(true);
+            _PanelStart.gameObject.SetActive(false);
+            _FoodConsumed.text = "Food Consumed: " + fullnessPercentage * 5;
+            _FoodWasted.text = "Food Wasted: -" + 100;
+            _TotalScore.text = "Total Score : " + ((fullnessPercentage * 5) - 100);
+            if (((fullnessPercentage * 5) - 100) >= 100)
+            {
+                _GoodMessage.gameObject.SetActive(true);
+                _BadMessage.gameObject.SetActive(false);
+            }
+            else
+            {
+                _BadMessage.gameObject.SetActive(true);
+                _GoodMessage.gameObject.SetActive(false);
+            }
         }
-        FullnessText.text = "Fullness: " + fullnessPercentage;
+
     }
     void FixedUpdate()
     {
@@ -124,12 +156,11 @@ public class PlayerController : MonoBehaviour
         else if (h < 0 && facingRight)
             Flip();
 
-        if (jump )
+        if (jump)
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
-            
         }
 
         //This is to reset the double jump powerup
@@ -157,12 +188,10 @@ public class PlayerController : MonoBehaviour
             {
                 jumpBoostTimer += 3.0f;
                 collider.gameObject.SetActive(false);
-               
             }
             else
             {
                 isBoostTimer = true;
-                
                 collider.gameObject.SetActive(false);
             }
         }
@@ -173,15 +202,12 @@ public class PlayerController : MonoBehaviour
             if (isDoubleJumpTrue)
             {
                 doubleJumpTimer += 3.0f;
-                
                 Debug.Log("You have consumed a double jump boost, time extended");
-
 
             }
             else
             {
                 isDoubleJumpTrue = true;
-                
                 Debug.Log("You have consumed a double jump boost");
 
             }
@@ -190,8 +216,17 @@ public class PlayerController : MonoBehaviour
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
-            fullnessPercentage += 5;
+            fullnessPercentage += 50;
             collider.gameObject.SetActive(false);
         }
+    }
+
+    void Resume()
+    {
+        Time.timeScale = 1f;
+        timeRemaining += 999f;
+        _PanelEnd.gameObject.SetActive(false);
+        _PanelStart.gameObject.SetActive(true);
+        Debug.Log("The game will not be continued as it has not been implemented further.");
     }
 }
