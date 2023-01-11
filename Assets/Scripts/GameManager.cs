@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenFood); // DELAY FOR EACH INSTANTIATE 
 
             Debug.Log("Game is running");
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(timeBetweenFood);
         }
     }
 

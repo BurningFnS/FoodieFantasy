@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 110597675}
   - component: {fileID: 110597674}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Time is Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0014801025, y: 134.00002}
+  m_AnchoredPosition: {x: 0.0014801025, y: 136.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110597674
@@ -365,7 +365,7 @@ RectTransform:
   m_GameObject: {fileID: 276816035}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.67166, y: 1.8574, z: 1.8574}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 110597673}
@@ -382,7 +382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -181.19, y: -38.485}
+  m_AnchoredPosition: {x: -393, y: -38.485}
   m_SizeDelta: {x: 332.6227, y: 313.8308}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &276816037
@@ -561,7 +561,7 @@ MonoBehaviour:
   - {fileID: 1015355063620859022, guid: ad921a248b473d34da87002b9bbed20d, type: 3}
   endGame: 0
   timeBetweenFood: 0.7
-  timeLeft: 10
+  timeLeft: 30
   timerText: {fileID: 1230428360}
   dropperCamera: {fileID: 519420028}
   platformerCamera: {fileID: 1648324069}
@@ -1842,7 +1842,7 @@ GameObject:
   - component: {fileID: 1074507092}
   - component: {fileID: 1074507091}
   m_Layer: 5
-  m_Name: Text (Legacy) (1)
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3912,7 +3912,7 @@ GameObject:
   - component: {fileID: 1943206325}
   - component: {fileID: 1943206324}
   m_Layer: 5
-  m_Name: Text (Legacy) (2)
+  m_Name: CONTINUE TO CLICK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
