@@ -15,7 +15,7 @@ public class Basket : MonoBehaviour
 
     float cap = 100;
 
-    //[HideInInspector]
+    [HideInInspector]
     public bool isBasketFull = false;
 
     Rigidbody2D rb;

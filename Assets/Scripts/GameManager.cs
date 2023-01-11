@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public List <Vector2> platformList;
 
     public Basket basket;
-    //[HideInInspector]
+    [HideInInspector]
     public bool isBasketFull = false;
 
     void Awake()

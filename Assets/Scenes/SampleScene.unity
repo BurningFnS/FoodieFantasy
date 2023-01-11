@@ -572,18 +572,14 @@ MonoBehaviour:
   platform: {fileID: 6196712304465112835, guid: 47f03588b4d42264cbaf62fccacd155a, type: 3}
   horizontalMin: -4
   horizontalMax: 4
-
   verticalMin: 1.5
   verticalMax: 2
-
   lastPlatformPosition: {x: 0, y: 0}
   player: {fileID: 535342608}
   platformSpawn: []
   platformList: []
-
   basket: {fileID: 447105165}
   isBasketFull: 0
-
 --- !u!4 &336811394
 Transform:
   m_ObjectHideFlags: 0
@@ -1009,6 +1005,7 @@ MonoBehaviour:
   fullnessPercentage: 0
   timeRemaining: 0
   groundCheck: {fileID: 1518774778}
+  grounded: 0
   _FoodConsumed: {fileID: 535708463}
   _FoodWasted: {fileID: 1371367840}
   _TotalScore: {fileID: 1485372533}
@@ -1097,6 +1094,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535708461}
   m_CullTransparentMesh: 1
+--- !u!1 &592393345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 592393347}
+  - component: {fileID: 592393346}
+  - component: {fileID: 592393348}
+  m_Layer: 0
+  m_Name: DeathPlatformer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &592393346
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592393345}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.17885542, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 19.24324, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &592393347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592393345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15001011, y: 44.67, z: -0.031618733}
+  m_LocalScale: {x: 6.725, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592393348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592393345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66d1aff4652f63f4ba3d52f8bf44c133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 535342615}
+  playerController: {fileID: 535342615}
+  _FoodConsumed: {fileID: 535708463}
+  _FoodWasted: {fileID: 1371367840}
+  _TotalScore: {fileID: 1485372533}
+  _GoodMessage: {fileID: 816043976}
+  _BadMessage: {fileID: 1298865923}
+  _PanelEnd: {fileID: 276816036}
+  _PanelStart: {fileID: 1469515897}
+  _Continue: {fileID: 1430225747}
 --- !u!1 &626802223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,6 +2279,7 @@ MonoBehaviour:
   fullnessPercentage: 0
   timeRemaining: 0
   groundCheck: {fileID: 626802224}
+  grounded: 0
   _FoodConsumed: {fileID: 535708463}
   _FoodWasted: {fileID: 1371367840}
   _TotalScore: {fileID: 1485372533}
@@ -2340,6 +2419,10 @@ PrefabInstance:
     - target: {fileID: 8095947265537644599, guid: 82139f5fb84f14f498a9746d48c45adc, type: 3}
       propertyPath: m_Name
       value: CollegeStudent Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095947265537644599, guid: 82139f5fb84f14f498a9746d48c45adc, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8095947265844649365, guid: 82139f5fb84f14f498a9746d48c45adc, type: 3}
       propertyPath: m_IsActive
@@ -3942,7 +4025,7 @@ RectTransform:
   m_GameObject: {fileID: 1943206322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9999999, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 276816036}
@@ -3950,7 +4033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.301529, y: -146.85}
+  m_AnchoredPosition: {x: 12.301552, y: -146.85002}
   m_SizeDelta: {x: 220.2545, y: 20.1285}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1943206324

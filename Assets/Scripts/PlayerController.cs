@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour
     //---------------------------------//
     public Transform groundCheck;
 
-    private bool grounded = false;
+    [HideInInspector]
+    public bool grounded = false;
+
     //private Animator anim;
     private Rigidbody2D rb2d;
 
