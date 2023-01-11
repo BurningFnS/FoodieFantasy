@@ -545,7 +545,6 @@ MonoBehaviour:
   - {fileID: 27855879800635423, guid: 1bdaa0604c8b9ad4c822768255ecd34d, type: 3}
   - {fileID: 2787795774451407777, guid: 7e44db1957ecd1941afe386917177348, type: 3}
   - {fileID: 4283187441131328679, guid: 3b617d635b014c94993a24490edc4703, type: 3}
-  - {fileID: 2218258286095710107, guid: 882569192dd98a34d8d583d84a2cc978, type: 3}
   - {fileID: 2247034339131842560, guid: 0b867a698b812224d91864e6546af9cf, type: 3}
   - {fileID: 6526242606653771825, guid: 9065892835c81fe4abc884647b6f8848, type: 3}
   - {fileID: 3400789859440614590, guid: 74e7440f59e1c794ab4b3931fca87ece, type: 3}
@@ -556,9 +555,10 @@ MonoBehaviour:
   - {fileID: 4593126470037582523, guid: 23f07157fa9b9d1408c592ce6194244c, type: 3}
   - {fileID: 1070357603346101201, guid: 9e3c6c5232b7a0d4c851e466dbb8f969, type: 3}
   - {fileID: 4279432709148667224, guid: 447ad4181b795e14089d8a9852c3816d, type: 3}
-  - {fileID: 1053963702743538448, guid: c3e626052e0779b4eabcf9f5bfac9df5, type: 3}
   - {fileID: 1367416483592135107, guid: db1918fafdb58a94ca38f1e49d8bf620, type: 3}
+  - {fileID: 2218258286095710107, guid: 882569192dd98a34d8d583d84a2cc978, type: 3}
   - {fileID: 1015355063620859022, guid: ad921a248b473d34da87002b9bbed20d, type: 3}
+  - {fileID: 1053963702743538448, guid: c3e626052e0779b4eabcf9f5bfac9df5, type: 3}
   endGame: 0
   timeBetweenFood: 0.7
   timeLeft: 30
@@ -568,16 +568,22 @@ MonoBehaviour:
   dropperCanvas: {fileID: 893871811}
   platformerCanvas: {fileID: 1021503330}
   platformLength: 0
-  maxPlatforms: 20
+  maxPlatforms: 30
   platform: {fileID: 6196712304465112835, guid: 47f03588b4d42264cbaf62fccacd155a, type: 3}
   horizontalMin: -4
   horizontalMax: 4
-  verticalMin: 1
-  verticalMax: 2.5
+
+  verticalMin: 1.5
+  verticalMax: 2
+
   lastPlatformPosition: {x: 0, y: 0}
   player: {fileID: 535342608}
   platformSpawn: []
   platformList: []
+
+  basket: {fileID: 447105165}
+  isBasketFull: 0
+
 --- !u!4 &336811394
 Transform:
   m_ObjectHideFlags: 0
@@ -728,6 +734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chilli Sauce
       objectReference: {fileID: 0}
+    - target: {fileID: 2218258286095710107, guid: 882569192dd98a34d8d583d84a2cc978, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 882569192dd98a34d8d583d84a2cc978, type: 3}
 --- !u!1 &447105162
@@ -833,6 +843,7 @@ MonoBehaviour:
   maxPlatforms: 0
   platformList: []
   speed: 10
+  isBasketFull: 0
   groceryList: []
   capacityText: {fileID: 371321486}
 --- !u!61 &447105166
@@ -2253,6 +2264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Worchestershire sauce
       objectReference: {fileID: 0}
+    - target: {fileID: 1015355063620859022, guid: ad921a248b473d34da87002b9bbed20d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad921a248b473d34da87002b9bbed20d, type: 3}
 --- !u!1001 &1211046837
@@ -2363,7 +2378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1230428359
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4288,7 +4303,7 @@ GameObject:
   - component: {fileID: 2047214901}
   - component: {fileID: 2047214900}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: DeathBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     public float timeBetweenFood = 1.0f;
 
     public float timeLeft = 30f;
-    private bool timerIsRunning = false;
     public Text timerText;
 
     float GameHeight;
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
     public GameObject platformerCanvas;
 
     [HideInInspector] public float platformLength;
-    public int maxPlatforms = 20;
+    public int maxPlatforms = 30;
     public GameObject platform;
 
     public float horizontalMin = 4f;
@@ -47,6 +46,10 @@ public class GameManager : MonoBehaviour
     public GameObject[] platformSpawn;
     public List <Vector2> platformList;
 
+    public Basket basket;
+    //[HideInInspector]
+    public bool isBasketFull = false;
+
     void Awake()
     {
         startingLine = new Vector3(Random.Range(-maxX, maxX), 6.2f, 0f);
@@ -60,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         CalculateGameDimensions();
 
-        timerIsRunning = true;
+        
 
         dropperCamera.SetActive(true);
         platformerCamera.SetActive(false);
@@ -79,32 +82,24 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         startingLine = new Vector3(Random.Range(-maxX, maxX), maxY + 0.5f, 0f);
+        isBasketFull = basket.isBasketFull;
 
-        if (timerIsRunning)
+        if (isBasketFull == true)
         {
-            if (timeLeft > 0)
-            {
-                timeLeft -= Time.deltaTime;
-            }
-            else
-            {
-                timeLeft = 0;
-                Debug.Log("Timer over hahahhaha");
-                timerIsRunning = false;
-                StopCoroutine(isDropperRunning);
 
-                platformerCamera.SetActive(true);
-                dropperCamera.SetActive(false);
-                dropperCanvas.SetActive (false);
-                platformerCanvas.SetActive (true);
-                player.SetActive(true);
-            }
+            StopCoroutine(isDropperRunning);
+
+            platformerCamera.SetActive(true);
+            dropperCamera.SetActive(false);
+            dropperCanvas.SetActive(false);
+            platformerCanvas.SetActive(true);
+            player.SetActive(true);
         }
 
-        DisplayTime(timeLeft);
+        //DisplayTime(timeLeft);
 
         playerPosition = player.transform.position;
-        if (playerPosition.x > (platformSpawn[maxPlatforms - 10].transform.position.x - platformLength))
+        if (playerPosition.y > (platformSpawn[maxPlatforms - 10].transform.position.y)) 
         {
             lastPlatformPosition = randomPosition;
             Spawn();

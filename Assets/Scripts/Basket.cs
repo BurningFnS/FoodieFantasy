@@ -15,6 +15,9 @@ public class Basket : MonoBehaviour
 
     float cap = 100;
 
+    //[HideInInspector]
+    public bool isBasketFull = false;
+
     Rigidbody2D rb;
     Rigidbody2D groceryrb2d;
 
@@ -39,6 +42,19 @@ public class Basket : MonoBehaviour
     void FixedUpdate()
     {
         BasketMovement();
+
+    }
+
+    void Update()
+    {
+        if (cap <= 0)
+        {
+            isBasketFull = true;
+        }
+        else
+        {
+            isBasketFull = false;
+        }
     }
 
     void BasketMovement()
