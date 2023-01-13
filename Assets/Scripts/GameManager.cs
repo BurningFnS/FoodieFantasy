@@ -110,7 +110,8 @@ public class GameManager : MonoBehaviour
     {
         while (endGame == false)
         {
-            Instantiate(groceriesList[Random.Range(0, groceriesList.Length)], startingLine, Quaternion.identity);
+            GameObject grocery = Instantiate(groceriesList[Random.Range(0, groceriesList.Length)], startingLine, Quaternion.identity) as GameObject;
+            grocery.name = grocery.name.Replace("(Clone)", "");
             yield return new WaitForSeconds(timeBetweenFood); // DELAY FOR EACH INSTANTIATE 
 
             Debug.Log("Game is running");
