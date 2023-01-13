@@ -561,7 +561,7 @@ MonoBehaviour:
   - {fileID: 1053963702743538448, guid: c3e626052e0779b4eabcf9f5bfac9df5, type: 3}
   endGame: 0
   timeBetweenFood: 0.7
-  timeLeft: 30
+  timeLeft: 100
   timerText: {fileID: 1230428360}
   dropperCamera: {fileID: 519420028}
   platformerCamera: {fileID: 1648324069}
@@ -840,6 +840,8 @@ MonoBehaviour:
   platformList: []
   speed: 10
   isBasketFull: 0
+  _HasExceededCapacity: 0
+  _WastedFoodCapacity: 0
   groceryList: []
   capacityText: {fileID: 371321486}
 --- !u!61 &447105166

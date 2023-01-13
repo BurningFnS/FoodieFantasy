@@ -18,9 +18,6 @@ public class Basket : MonoBehaviour
     [HideInInspector]
     public bool isBasketFull = false;
 
-    //This variable is used in the spoilt food.
-    [HideInInspector]
-    public bool _HasExceededCapacity = false;
     [HideInInspector]
     public float _WastedFoodCapacity = 0f;
 
@@ -55,6 +52,10 @@ public class Basket : MonoBehaviour
     {
         if (cap <= 0)
         {
+
+            Debug.Log(cap);
+            _WastedFoodCapacity = Mathf.Abs(Mathf.Round(cap / 2));
+            Debug.Log("Wasted food to be spawned is " + _WastedFoodCapacity);
             isBasketFull = true;
         }
         else
@@ -102,75 +103,33 @@ public class Basket : MonoBehaviour
             groceryrb2d = other.gameObject.GetComponent<Rigidbody2D>();
 
             float s = groceries.size;
-            if (_HasExceededCapacity == false && (cap -= s) > 0)
-            {   
+            
 
-                cap -= s;
+            cap -= s;
 
-                capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
+            capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
 
-                Debug.Log(string.Join(", ", groceryList));
-                Debug.Log("Grocery Count: " + groceryList.Count);
+            Debug.Log(string.Join(", ", groceryList));
+            Debug.Log("Grocery Count: " + groceryList.Count);
 
-                //platformSpawn = new GameObject[maxPlatforms];
-                for (int i = 0; i < platformList.Count; i++)
-                {
-
-                    //Debug.Log(platformSpawn[i].transform.position);
-
-                    for (int j = 0; j < groceryList.Count; j++)
-                    {
-                        if (i == j)
-                        {
-                            other.gameObject.transform.position = new Vector2(platformList[i].x, platformList[i].y + 1f);
-                            groceries.enabled = false;
-                            other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                        }
-                    }
-
-                }
-            }
-            else if ((cap -= s) < 0)
+            //platformSpawn = new GameObject[maxPlatforms];
+            for (int i = 0; i < platformList.Count; i++)
             {
-                _HasExceededCapacity = true;
-                Debug.Log("Food has exceeded the limit and will be wasted");
-                return;
 
-            }
+                //Debug.Log(platformSpawn[i].transform.position);
 
-            if(_HasExceededCapacity)
-            {
-                groceryList.Add(other.gameObject);
-
-                groceries = other.gameObject.GetComponent<Groceries>();
-                groceryrb2d = other.gameObject.GetComponent<Rigidbody2D>();
-
-                _WastedFoodCapacity += groceries.size;
-
-                for (int i = (int)_WastedFoodCapacity; i >= 4; i = i- 5)
+                for (int j = 0; j < groceryList.Count; j++)
                 {
-                    Debug.Log("Spawn dead food" + i);
-                }
-                return;
-
-                //platformSpawn = new GameObject[maxPlatforms];
-                for (int i = 0; i < platformList.Count; i++)
-                {
-
-                    //Debug.Log(platformSpawn[i].transform.position);
-
-                    for (int j = 0; j < groceryList.Count; j++)
+                    if (i == j)
                     {
-                        if (i == j)
-                        {
-                            other.gameObject.transform.position = new Vector2(platformList[i].x, platformList[i].y + 1f);
-                            groceries.enabled = false;
-                            other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                        }
+                        other.gameObject.transform.position = new Vector2(platformList[i].x, platformList[i].y + 1f);
+                        groceries.enabled = false;
+                        other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     }
-
                 }
+
             }
+          
             
             
         }
