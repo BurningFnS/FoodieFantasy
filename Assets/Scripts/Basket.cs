@@ -29,7 +29,7 @@ public class Basket : MonoBehaviour
     public List<object> foodList;
 
     public Text capacityText;
-    public TextMeshProUGUI groceryListUI;
+    public Text groceryListUI;
 
     // Start is called before the first frame update
     void Start()
