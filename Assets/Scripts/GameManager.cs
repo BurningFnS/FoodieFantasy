@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
             grocery.name = grocery.name.Replace("(Clone)", "");
             yield return new WaitForSeconds(timeBetweenFood); // DELAY FOR EACH INSTANTIATE 
 
+
             Debug.Log("Game is running");
             yield return new WaitForSeconds(timeBetweenFood);
         }

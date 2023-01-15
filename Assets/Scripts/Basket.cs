@@ -10,8 +10,12 @@ public class Basket : MonoBehaviour
     private GameObject[] platformSpawn;
     public int maxPlatforms;
     public List<Vector2> platformList;
+
     public List<Vector2> groceryPlatformedList;
     private Vector2 lastPlatform;
+
+    public AudioSource basketAudio;
+
 
     public float speed = 10f;
     bool isMoving = false;
@@ -33,7 +37,7 @@ public class Basket : MonoBehaviour
     public List<object> foodList;
 
     public Text capacityText;
-    public TextMeshProUGUI groceryListUI;
+    public Text groceryListUI;
 
     // Start is called before the first frame update
     void Start()
@@ -127,6 +131,8 @@ public class Basket : MonoBehaviour
 
             capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
             groceryListUI.text = "Groceries: " + string.Join(", ", foodList);
+
+            basketAudio.Play();
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);

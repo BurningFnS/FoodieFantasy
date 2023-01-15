@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool facingRight = true;
     [HideInInspector] public bool jump = false;
 
-    public TextMeshProUGUI TimingText, FullnessText;
-
     public float moveForce = 365f;
     public float maxSpeed = 5f;
     public float jumpForce = 1000f;
+    public AudioSource jumpAudio;
+    public AudioSource eatingAudio;
 
     public int fullnessPercentage;
     public float timeRemaining;
@@ -39,9 +39,9 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
 
     [SerializeField]
-    Text _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage;
+    Text TimingText, FullnessText, _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage, _Score;
     [SerializeField]
-    RectTransform _PanelEnd, _PanelStart;
+    RectTransform _PanelEnd, _PanelStart, _Transparent;
     [SerializeField]
     Button _Continue;
 
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         fullnessPercentage = 0;
 
         _PanelEnd.gameObject.SetActive(false);
+        _Transparent.gameObject.SetActive(false);
         _PanelStart.gameObject.SetActive(true);
 
 
@@ -130,12 +131,14 @@ public class PlayerController : MonoBehaviour
         if(timeRemaining > 0)
         {
             TimingText.text = "Time Remaining: " + Mathf.RoundToInt(timeRemaining -= Time.smoothDeltaTime);
+            _Score.text = "Score : " + ((fullnessPercentage * 5));
         }
         else
         {
             Time.timeScale = 0f;
 
             _PanelEnd.gameObject.SetActive(true);
+            _Transparent.gameObject.SetActive(true);
             _PanelStart.gameObject.SetActive(false);
             _FoodConsumed.text = "Food Consumed: " + fullnessPercentage * 5;
             _FoodWasted.text = "Food Wasted: -" + 100;
@@ -181,6 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
+            jumpAudio.Play();
             jump = false;
         }
 
@@ -202,6 +206,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     //This colliderEnter checks for power ups and food triggers
     {
+        eatingAudio.Play();
         // Layer 10 is jump boost food
         if (collider.gameObject.layer == 10)
         {
@@ -247,6 +252,7 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1f;
         timeRemaining += 999f;
         _PanelEnd.gameObject.SetActive(false);
+        _Transparent.gameObject.SetActive(false);
         _PanelStart.gameObject.SetActive(true);
         Debug.Log("The game will not be continued as it has not been implemented further.");
     }
