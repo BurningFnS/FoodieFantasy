@@ -45,6 +45,17 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] platformSpawn;
     public List <Vector2> platformList;
+    public int platformsPerRow = 4;
+    [HideInInspector]
+    public float distanceBetweenPlatforms;
+    [HideInInspector]
+    public float heightBetweenPlatforms;
+    public int rowsOfPlatforms = 6;
+
+    private Vector2 platform1;
+    private Vector2 platform2;
+    private Vector2 platform3;
+    private int startingPlatformOfRow;
 
     public Basket basket;
     [HideInInspector]
@@ -98,12 +109,12 @@ public class GameManager : MonoBehaviour
 
         //DisplayTime(timeLeft);
 
-        playerPosition = player.transform.position;
-        if (playerPosition.y > (platformSpawn[maxPlatforms - 10].transform.position.y)) 
-        {
-            lastPlatformPosition = randomPosition;
-            Spawn();
-        }
+        //playerPosition = player.transform.position;
+        //if (playerPosition.y > (platformSpawn[maxPlatforms - 10].transform.position.y)) 
+        //{
+        //    lastPlatformPosition = randomPosition;
+        //    Spawn();
+        //}
     }
 
     IEnumerator GameLoop()
@@ -137,20 +148,96 @@ public class GameManager : MonoBehaviour
 
     void Spawn()
     {
-        platformSpawn = new GameObject[maxPlatforms];
-
-        for (int i = 0; i < maxPlatforms; i++)
+        platformSpawn = new GameObject[rowsOfPlatforms * platformsPerRow];
+        
+        
+        for (int k = 0; k < rowsOfPlatforms; k++)
         {
-            //randomPosition = new Vector2(lastPlatformPosition.x + platformLength, lastPlatformPosition.y) + new Vector2(Random.Range(horizontalMin, horizontalMax), Random.Range(verticalMin, verticalMax));
-            //platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
-            //lastPlatformPosition = randomPosition;
             randomPosition = lastPlatformPosition;
-            randomPosition.x += Random.Range(horizontalMin, horizontalMax);
-            randomPosition.y += Random.Range(verticalMin, verticalMax);
-            platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
-            lastPlatformPosition = randomPosition;
-            platformList.Add(lastPlatformPosition);
+            heightBetweenPlatforms = Random.Range(verticalMin, verticalMax);
+            randomPosition.y += heightBetweenPlatforms;
+            startingPlatformOfRow = Random.Range(1, 4);
+            Debug.Log("starting platform is" + startingPlatformOfRow);
+            for (int j = 0; j < platformsPerRow; j++)
+            {
+
+                distanceBetweenPlatforms = Random.Range(horizontalMin, horizontalMax);
+                
+                if (j == 0)
+                {
+                    
+                    randomPosition.x -= 1f * distanceBetweenPlatforms;
+                    platformSpawn[k] = Instantiate(platform, randomPosition, Quaternion.identity);
+                    lastPlatformPosition = randomPosition;
+                    platform1 = lastPlatformPosition;
+                    platformList.Add(lastPlatformPosition);
+                }
+                else if (j == 1)
+                {
+                    //distanceBetweenPlatforms = Random.Range(horizontalMin, horizontalMax);
+                    randomPosition.x += distanceBetweenPlatforms;
+                    platformSpawn[k] = Instantiate(platform, randomPosition, Quaternion.identity);
+                    lastPlatformPosition = randomPosition;
+                    platform2 = randomPosition;
+                    platformList.Add(lastPlatformPosition);
+                }
+                else if (j == 2)
+                {
+                    //distanceBetweenPlatforms = Random.Range(horizontalMin, horizontalMax);
+                    randomPosition.x += distanceBetweenPlatforms;
+                    platformSpawn[k] = Instantiate(platform, randomPosition, Quaternion.identity);
+                    lastPlatformPosition = randomPosition;
+                    platform3 = randomPosition;
+                    platformList.Add(lastPlatformPosition);
+                }
+                if (startingPlatformOfRow == 1)
+                {
+                    lastPlatformPosition = platform1;
+                }
+                else if (startingPlatformOfRow == 2)
+                {
+                    lastPlatformPosition = platform2;
+                }
+                else if (startingPlatformOfRow == 3)
+                {
+                    lastPlatformPosition = platform3;
+                }
+            }
 
         }
-    }
+
+
+
+            
+
+            ////for (int i = 0; i < maxPlatforms; i++)
+            ////{
+            //    //randomPosition = new Vector2(lastPlatformPosition.x + platformLength, lastPlatformPosition.y) + new Vector2(Random.Range(horizontalMin, horizontalMax), Random.Range(verticalMin, verticalMax));
+            //    //platformSpawn[i] = Instantiate(platform, randomPosition, Quaternion.identity);
+            //    //lastPlatformPosition = randomPosition;
+            //    randomPosition = lastPlatformPosition;
+
+            //    rowsOfPlatforms = Mathf.CeilToInt(maxPlatforms / platformsPerRow);
+
+
+            //    for (int j = 0; j < platformsPerRow; j++)
+            //    {
+            //        distanceBetweenPlatforms = Random.Range(horizontalMin, horizontalMax);
+
+            //        for (int k = 0; k < rowsOfPlatforms; k++)
+            //        {
+            //            heightBetweenPlatforms = Random.Range(verticalMin, verticalMax);
+            //            randomPosition = new Vector2(distanceBetweenPlatforms, heightBetweenPlatforms);
+            //            platformSpawn[k] = Instantiate(platform, randomPosition, Quaternion.identity);
+            //            lastPlatformPosition = randomPosition;
+            //            platformList.Add(lastPlatformPosition);
+            //        }
+            //    }
+            //    //randomPosition.y += Random.Range(verticalMin, verticalMax);
+
+
+
+            ////}
+            ///
+        }
 }

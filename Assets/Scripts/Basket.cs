@@ -10,6 +10,8 @@ public class Basket : MonoBehaviour
     private GameObject[] platformSpawn;
     public int maxPlatforms;
     public List<Vector2> platformList;
+    public List<Vector2> groceryPlatformedList;
+    private Vector2 lastPlatform;
 
     public float speed = 10f;
     bool isMoving = false;
@@ -23,6 +25,8 @@ public class Basket : MonoBehaviour
     Rigidbody2D groceryrb2d;
 
     Groceries groceries;
+    private int rows;
+    private int foodPlatform;
 
     //private List<string> ItemList = new List<string>();
     public List<GameObject> groceryList;
@@ -40,6 +44,22 @@ public class Basket : MonoBehaviour
         platformSpawn = gamemanager.platformSpawn;
         maxPlatforms = gamemanager.maxPlatforms;
         platformList = gamemanager.platformList;
+        rows = gamemanager.rowsOfPlatforms;
+
+        for (int i = 0; i < rows; i++)
+        {
+            foodPlatform = Random.Range(0, 3);
+
+            for (int j = 0; j < 3; j++)
+            {
+
+                if (j == foodPlatform)
+                {
+                    groceryPlatformedList.Add(platformList[3 * i + foodPlatform]);
+                }
+            }
+
+        }
     }
 
     // Update is called once per frame
@@ -111,24 +131,75 @@ public class Basket : MonoBehaviour
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
 
-            //platformSpawn = new GameObject[maxPlatforms];
-            for (int i = 0; i < platformList.Count; i++)
+
+            for (int j = 0; j < groceryList.Count; j++)
             {
-
-                //Debug.Log(platformSpawn[i].transform.position);
-
-                for (int j = 0; j < groceryList.Count; j++)
-                {
-                    if(i == j)
-                    {
-                        other.gameObject.transform.position = new Vector2(platformList[i].x, platformList[i].y + 1f);
-                        groceries.enabled = false;
-                        other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    }
-                }
-
+                lastPlatform = groceryPlatformedList[j];
+                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+                groceries.enabled = false;
+                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                
             }
-            
+
+
+
+            ////platformSpawn = new GameObject[maxPlatforms];
+            //for (int i = 0; i < platformList.Count; i++)
+            //{
+            //    //lastPlatform = platformList[i];
+            //    for (int k = 0; k < rows; k++)
+            //    {
+            //        foodPlatform = Random.Range(0, 3);
+            //        if (i % 3 == 1)
+            //        {
+            //            if (foodPlatform == 0)
+            //            {
+            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
+            //                lastPlatform = platformList[(k * 3) + foodPlatform];
+            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+            //                groceries.enabled = false;
+            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //            }
+            //        }
+            //        else if (i % 3 == 2)
+            //        {
+            //            if (foodPlatform == 1)
+            //            {
+            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
+            //                lastPlatform = platformList[(k * 3) + foodPlatform];
+            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+            //                groceries.enabled = false;
+            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //            }
+            //        }
+            //        else if (i % 3 == 0)
+            //        {
+            //            if (foodPlatform == 2)
+            //            {
+            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
+            //                lastPlatform = platformList[(k * 3) + foodPlatform];
+            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+            //                groceries.enabled = false;
+            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //            }
+            //        }
+            //    }
+
+            //Debug.Log(platformSpawn[i].transform.position);
+
+
+            //for (int j = 0; j < groceryList.Count; j++)
+            //{
+            //    if(i == j)
+            //    {
+            //        other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+            //        groceries.enabled = false;
+            //        other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //    }
+            //}
+
+            //}
+
         }
     }
 }
