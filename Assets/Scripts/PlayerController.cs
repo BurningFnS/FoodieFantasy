@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float moveForce = 365f;
     public float maxSpeed = 5f;
     public float jumpForce = 1000f;
+    public AudioSource jumpAudio;
+    public AudioSource eatingAudio;
 
     public int fullnessPercentage;
     public float timeRemaining;
@@ -182,6 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
+            jumpAudio.Play();
             jump = false;
         }
 
@@ -203,6 +206,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     //This colliderEnter checks for power ups and food triggers
     {
+        eatingAudio.Play();
         // Layer 10 is jump boost food
         if (collider.gameObject.layer == 10)
         {

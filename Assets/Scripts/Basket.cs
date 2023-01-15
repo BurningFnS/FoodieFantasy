@@ -10,6 +10,7 @@ public class Basket : MonoBehaviour
     private GameObject[] platformSpawn;
     public int maxPlatforms;
     public List<Vector2> platformList;
+    public AudioSource basketAudio;
 
     public float speed = 10f;
     bool isMoving = false;
@@ -107,6 +108,8 @@ public class Basket : MonoBehaviour
 
             capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
             groceryListUI.text = "Groceries: " + string.Join(", ", foodList);
+
+            basketAudio.Play();
 
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
