@@ -970,6 +970,7 @@ MonoBehaviour:
   gamemanager: {fileID: 336811393}
   maxPlatforms: 0
   platformList: []
+  groceryPlatformedList: []
   basketAudio: {fileID: 354025359}
   speed: 10
   isBasketFull: 0
@@ -1133,14 +1134,11 @@ MonoBehaviour:
   jump: 0
   moveForce: 20
   maxSpeed: 5
-
   jumpForce: 400
-
   jumpAudio: {fileID: 683719734}
   eatingAudio: {fileID: 588199989}
-
   fullnessPercentage: 0
-  timeRemaining: 0
+  timeRemaining: 20
   groundCheck: {fileID: 1518774778}
   grounded: 0
   TimingText: {fileID: 1752254444}
@@ -1150,7 +1148,7 @@ MonoBehaviour:
   _TotalScore: {fileID: 1485372533}
   _GoodMessage: {fileID: 816043976}
   _BadMessage: {fileID: 1298865923}
-  _Score: {fileID: 2061685880}
+  _Score: {fileID: 1074507091}
   _PanelEnd: {fileID: 276816036}
   _PanelStart: {fileID: 1469515897}
   _Transparent: {fileID: 1208147947}
