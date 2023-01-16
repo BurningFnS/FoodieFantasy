@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Linq;
 
 public class Basket : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class Basket : MonoBehaviour
     bool isMoving = false;
 
     float cap = 100;
+    int spoiledfoodamount = 0;
 
     [HideInInspector]
     public bool isBasketFull = false;
@@ -39,6 +42,16 @@ public class Basket : MonoBehaviour
     public Text capacityText;
     public Text groceryListUI;
 
+    //movement variables//
+    private bool moveLeft = false;
+    private bool moveRight = false;
+    private float horizontalMove;
+
+    //Spoiled food variables//
+    public List<GameObject> _spoiledFood;
+    public int _randomrange;
+    public List<GameObject> _FinalGroceryList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +65,7 @@ public class Basket : MonoBehaviour
 
         for (int i = 0; i < rows; i++)
         {
-            foodPlatform = Random.Range(0, 3);
+            foodPlatform = UnityEngine.Random.Range(0, 3);
 
             for (int j = 0; j < 3; j++)
             {
@@ -66,10 +79,11 @@ public class Basket : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         BasketMovement();
+        keyboardBasketMovement();
+        rb.velocity = new Vector2(horizontalMove, rb.velocity.y);
 
     }
 
@@ -83,13 +97,21 @@ public class Basket : MonoBehaviour
         {
             isBasketFull = false;
         }
+        if (Input.GetKey(KeyCode.E))
+        {
+            for (int j = 0; j < groceryList.Count; j++)
+            {
+                Debug.Log(groceryList[j]);
+
+            }
+        }
     }
 
-    void BasketMovement()
+    void keyboardBasketMovement()
     {
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
 
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
             isMoving = true;
         }
@@ -98,7 +120,7 @@ public class Basket : MonoBehaviour
             isMoving = false;
         }
 
-        if(isMoving == false)
+        if (isMoving == false)
         {
             rb.velocity = Vector3.zero;
         }
@@ -106,18 +128,34 @@ public class Basket : MonoBehaviour
         {
             rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
         }
-        
-        
+
+
         //transform.position += horizontal * speed * Time.deltaTime;
     }
+    public void BasketMovement()
+    {
+        if (moveLeft)
+        {
+            isMoving = true;
+            horizontalMove = -speed;
+        }
+        else if (moveRight)
+        {
+            isMoving = true;
+            horizontalMove = speed;
+        }
+        else
+        {
+            isMoving = false;
+            horizontalMove = 0;
+        }
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Food")
-        {
-            //ItemList.Add(gameObject.name);
-            //Debug.Log("ItemList Count: " + ItemList.Count);
-
+        {            
             groceryList.Add(other.gameObject);
             foodList.Add(other.gameObject.name);
 
@@ -126,6 +164,23 @@ public class Basket : MonoBehaviour
 
             float s = groceries.size;
 
+            //This is to spawn spoiled food and get values.
+            if ((cap -= s) < 0)
+            {
+                for (int i = (int)cap; i < 0; i = i + 2)
+                {
+                    Debug.Log("this is how much spoiled food you have " + Mathf.Abs(i));
+                    spoiledfoodamount++;
+                    _randomrange = UnityEngine.Random.Range(0, _spoiledFood.Count);
+                    GameObject _CreateSpoiledFood = Instantiate(_spoiledFood[_randomrange]);
+                    _CreateSpoiledFood.transform.position = new Vector2(UnityEngine.Random.Range(1000, 5000), UnityEngine.Random.Range(1000, 5000));
+                    groceryList.Add(_CreateSpoiledFood);
+                    Debug.Log("Spawn this amount of spoiled food = " + spoiledfoodamount);
+                }
+
+            }
+            //ItemList.Add(gameObject.name);
+            //Debug.Log("ItemList Count: " + ItemList.Count);
 
             cap -= s;
 
@@ -137,75 +192,46 @@ public class Basket : MonoBehaviour
             Debug.Log(string.Join(", ", groceryList));
             Debug.Log("Grocery Count: " + groceryList.Count);
 
+            // Start this when collect food AFTER that spawn these mf else where.
+            groceries.enabled = false;
+            other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            other.gameObject.transform.position = new Vector2(UnityEngine.Random.Range(1000, 5000), UnityEngine.Random.Range(1000, 5000));
 
-            for (int j = 0; j < groceryList.Count; j++)
+            if(cap <= 0)
             {
-                lastPlatform = groceryPlatformedList[j];
-                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
-                groceries.enabled = false;
-                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                
+                // Randomly Order it by Guid..
+                groceryList = groceryList.OrderBy(i => Guid.NewGuid()).ToList();
+                // It's now shuffled.
+                SpawnOnEnd();
             }
+        }
+    }    
 
-
-
-            ////platformSpawn = new GameObject[maxPlatforms];
-            //for (int i = 0; i < platformList.Count; i++)
-            //{
-            //    //lastPlatform = platformList[i];
-            //    for (int k = 0; k < rows; k++)
-            //    {
-            //        foodPlatform = Random.Range(0, 3);
-            //        if (i % 3 == 1)
-            //        {
-            //            if (foodPlatform == 0)
-            //            {
-            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
-            //                lastPlatform = platformList[(k * 3) + foodPlatform];
-            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
-            //                groceries.enabled = false;
-            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            //            }
-            //        }
-            //        else if (i % 3 == 2)
-            //        {
-            //            if (foodPlatform == 1)
-            //            {
-            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
-            //                lastPlatform = platformList[(k * 3) + foodPlatform];
-            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
-            //                groceries.enabled = false;
-            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            //            }
-            //        }
-            //        else if (i % 3 == 0)
-            //        {
-            //            if (foodPlatform == 2)
-            //            {
-            //                Debug.Log("platform no: " + (k * 3) + foodPlatform);
-            //                lastPlatform = platformList[(k * 3) + foodPlatform];
-            //                other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
-            //                groceries.enabled = false;
-            //                other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            //            }
-            //        }
-            //    }
-
-            //Debug.Log(platformSpawn[i].transform.position);
-
-
-            //for (int j = 0; j < groceryList.Count; j++)
-            //{
-            //    if(i == j)
-            //    {
-            //        other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
-            //        groceries.enabled = false;
-            //        other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            //    }
-            //}
-
-            //}
+    void SpawnOnEnd()
+    {
+        //Put this into another method and call it once If(cap <= 0)
+        for (int j = 0; j < groceryList.Count; j++)
+        {
+            // This with the for loop will be in another method
+            lastPlatform = groceryPlatformedList[j];
+            groceryList[j].transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
 
         }
+    }
+    public void TouchDownLeft()
+    {
+        moveLeft = true;
+    }
+    public void TouchUpLeft()
+    {
+        moveLeft = false;
+    }
+    public void TouchDownRight()
+    {
+        moveRight = true;
+    }
+    public void TouchUpRight()
+    {
+        moveRight = false;
     }
 }

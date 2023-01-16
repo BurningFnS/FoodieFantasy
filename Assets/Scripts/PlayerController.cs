@@ -48,6 +48,13 @@ public class PlayerController : MonoBehaviour
     Button _Continue;
     [SerializeField] Slider slider;
 
+
+    //Variables used for movement//
+    private bool moveLeft = false;
+    private bool moveRight = false;
+    private float horizontalMove;
+    private float speed = 1f;
+
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -162,9 +169,8 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
-        //Vector3 horizontal = new Vector3(h,)
-        if (h != 0 && !anim.GetBool("isJump"))
+
+        if (horizontalMove != 0 && !anim.GetBool("isJump"))
         {
             anim.SetBool("isRun", true);
         }
@@ -172,9 +178,27 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isRun", false);
         }
+        PlayerMovement();
+
         //anim.SetFloat("Speed", Mathf.Abs(h));
 
-        if (h * rb2d.velocity.x < maxSpeed)
+        if (horizontalMove > 0 && !facingRight)
+            Flip();
+        else if (horizontalMove < 0 && facingRight)
+            Flip();
+
+        //------------------------------------THIS IS KEYBOARD SETTINGS--------------------------------//
+        float h = Input.GetAxis("Horizontal");
+
+        if (horizontalMove != 0 && !anim.GetBool("isJump"))
+        {
+            anim.SetBool("isRun", true);
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
+        if (speed * rb2d.velocity.x < maxSpeed)
             rb2d.AddForce(Vector2.right * h * moveForce);
 
         if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
@@ -184,12 +208,12 @@ public class PlayerController : MonoBehaviour
             Flip();
         else if (h < 0 && facingRight)
             Flip();
+        // -----------------------------------------------------------------------------------------//
 
-        if (jump )
+        if (jump)
         {
             //anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
-            jumpAudio.Play();
             jump = false;
         }
 
@@ -198,6 +222,32 @@ public class PlayerController : MonoBehaviour
         {
             hasDoubleJumped = false;
         }
+
+    }
+    public void PlayerMovement()
+    {
+        if (moveLeft)
+        {
+            horizontalMove = -speed;
+            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+            if (horizontalMove * rb2d.velocity.x < maxSpeed)
+                rb2d.AddForce(Vector2.right * horizontalMove * moveForce);
+        }
+        else if (moveRight)
+        {
+            horizontalMove = speed;
+            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+            if (horizontalMove * rb2d.velocity.x < maxSpeed)
+                rb2d.AddForce(Vector2.right * horizontalMove * moveForce);
+
+        }
+        else
+        {
+            horizontalMove = 0;
+        }
+
     }
 
     void Flip()
@@ -244,6 +294,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
@@ -252,6 +303,14 @@ public class PlayerController : MonoBehaviour
 
             fullnessPercentage += filling;
             slider.value += groceries.filling;
+			collider.gameObject.SetActive(false);
+        }
+
+        // General Spoiled Food collection
+        if (collider.gameObject.tag == "Spoiled Food")
+        {
+            fullnessPercentage -= 5;
+            timeRemaining -= 2;
             collider.gameObject.SetActive(false);
         }
     }
@@ -264,5 +323,48 @@ public class PlayerController : MonoBehaviour
         _Transparent.gameObject.SetActive(false);
         _PanelStart.gameObject.SetActive(true);
         Debug.Log("The game will not be continued as it has not been implemented further.");
+    }
+
+    public void TouchDownLeft()
+    {
+        moveLeft = true;
+    }
+    public void TouchUpLeft()
+    {
+        moveLeft = false;
+    }
+    public void TouchDownRight()
+    {
+        moveRight = true;
+    }
+    public void TouchUpRight()
+    {
+        moveRight = false;
+    }
+    public void TouchDownJump()
+    {
+        //-------Double Jump------//
+
+        if (isDoubleJumpTrue && (hasDoubleJumped == false))
+        {
+            jump = true;
+            anim.SetBool("isJump", true);
+            if (Input.GetButtonDown("Jump"))
+            {
+                hasDoubleJumped = true;
+                jump = true;
+                anim.SetBool("isJump", true);
+            }
+        }
+        else if (grounded)
+        {
+            jump = true;
+            anim.SetBool("isJump", true);
+        }
+    }
+
+    public void TouchUpJump()
+    {
+
     }
 }
