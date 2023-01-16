@@ -967,6 +967,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2d02edd97381b42868e123bcedd80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spoiledFood:
+  - {fileID: 1907357016900717938, guid: c498fd6b20b552640bbaa9e4beeadde4, type: 3}
+  - {fileID: 9159242779460175262, guid: da1286a7cc2ae53428d0322b009ba4ff, type: 3}
+  - {fileID: 8683959370988833452, guid: df418186013011847ad5cb43f1ed2d7a, type: 3}
+  - {fileID: 4514577536347888046, guid: cf7e224b1a60e2740a16fa16dfa90a31, type: 3}
+  - {fileID: 2359124883368567753, guid: db9ae7881c681314a8244827e16069a0, type: 3}
+  - {fileID: 7425715004345111450, guid: cb3fe1fc0291a2045824f8ae404de6b5, type: 3}
+  - {fileID: 1243110240028761484, guid: cd43b8db83a65b54dba3032fdd55bbb3, type: 3}
+  - {fileID: 3804890947555768433, guid: 93a61fad51722a647aabc8ba6f4864ce, type: 3}
+  - {fileID: 186948125892303975, guid: 645554e4467fb1c4e9fa2ab5bd72cb9b, type: 3}
   gamemanager: {fileID: 336811393}
   maxPlatforms: 0
   platformList: []

@@ -21,6 +21,7 @@ public class Basket : MonoBehaviour
     bool isMoving = false;
 
     float cap = 100;
+    int spoiledfoodamount = 0;
 
     [HideInInspector]
     public bool isBasketFull = false;
@@ -43,6 +44,10 @@ public class Basket : MonoBehaviour
     private bool moveLeft = false;
     private bool moveRight = false;
     private float horizontalMove;
+
+    //Spoiled food variables//
+    public List<GameObject> _spoiledFood;
+    public int _randomrange;
 
     // Start is called before the first frame update
     void Start()
@@ -89,6 +94,7 @@ public class Basket : MonoBehaviour
         {
             isBasketFull = false;
         }
+        _randomrange = Random.Range(0, _spoiledFood.Count);
     }
 
     void keyboardBasketMovement()
@@ -134,30 +140,12 @@ public class Basket : MonoBehaviour
             horizontalMove = 0;
         }
     }
-    public void TouchDownLeft()
-    {
-        moveLeft = true;
-    }
-    public void TouchUpLeft()
-    {
-        moveLeft = false;
-    }
-    public void TouchDownRight()
-    {
-        moveRight = true;
-    }
-    public void TouchUpRight()
-    {
-        moveRight = false;
-    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Food")
-        {
-            //ItemList.Add(gameObject.name);
-            //Debug.Log("ItemList Count: " + ItemList.Count);
-
+        {            
             groceryList.Add(other.gameObject);
             foodList.Add(other.gameObject.name);
 
@@ -166,6 +154,20 @@ public class Basket : MonoBehaviour
 
             float s = groceries.size;
 
+            //This is to spawn spoiled food and get values.
+            if ((cap -= s) < 0)
+            {
+                for (int i = (int)cap; i < -1; i = i + 2)
+                {
+                    Debug.Log("this is how much spoiled food you have " + Mathf.Abs(i));
+                    spoiledfoodamount++;
+                }
+                int a = Random.Range(0, groceryList.Count);
+                groceryList.Insert(a, _spoiledFood[_randomrange]);
+                Debug.Log("Spawn this amount of spoiled food = " + spoiledfoodamount);
+            }
+            //ItemList.Add(gameObject.name);
+            //Debug.Log("ItemList Count: " + ItemList.Count);
 
             cap -= s;
 
@@ -178,15 +180,19 @@ public class Basket : MonoBehaviour
             Debug.Log("Grocery Count: " + groceryList.Count);
 
 
+            //Put this into another method and call it once If(cap <= 0)
             for (int j = 0; j < groceryList.Count; j++)
             {
+                // This with the for loop will be in another method
                 lastPlatform = groceryPlatformedList[j];
                 other.gameObject.transform.position = new Vector2(lastPlatform.x, lastPlatform.y + 1f);
+
+                // Start this when collect food AFTER that spawn these mf else where.
                 groceries.enabled = false;
                 other.gameObject.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                
-            }
 
+            }
+            // 
 
 
             ////platformSpawn = new GameObject[maxPlatforms];
@@ -247,5 +253,21 @@ public class Basket : MonoBehaviour
             //}
 
         }
+    }    
+    public void TouchDownLeft()
+    {
+        moveLeft = true;
+    }
+    public void TouchUpLeft()
+    {
+        moveLeft = false;
+    }
+    public void TouchDownRight()
+    {
+        moveRight = true;
+    }
+    public void TouchUpRight()
+    {
+        moveRight = false;
     }
 }

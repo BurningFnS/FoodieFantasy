@@ -165,7 +165,6 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
         if (horizontalMove != 0 && !anim.GetBool("isJump"))
         {
             anim.SetBool("isRun", true);
@@ -177,7 +176,15 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
 
         //anim.SetFloat("Speed", Mathf.Abs(h));
+
+        if (horizontalMove > 0 && !facingRight)
+            Flip();
+        else if (horizontalMove < 0 && facingRight)
+            Flip();
+
         //------------------------------------THIS IS KEYBOARD SETTINGS--------------------------------//
+        float h = Input.GetAxis("Horizontal");
+
         if (horizontalMove != 0 && !anim.GetBool("isJump"))
         {
             anim.SetBool("isRun", true);
@@ -192,16 +199,11 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
             rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
 
-        if (horizontalMove > 0 && !facingRight)
+        if (h > 0 && !facingRight)
             Flip();
-        else if (horizontalMove < 0 && facingRight)
+        else if (h < 0 && facingRight)
             Flip();
         // -----------------------------------------------------------------------------------------//
-
-        if (horizontalMove > 0 && !facingRight)
-            Flip();
-        else if (horizontalMove < 0 && facingRight)
-            Flip();
 
         if (jump)
         {
@@ -215,6 +217,7 @@ public class PlayerController : MonoBehaviour
         {
             hasDoubleJumped = false;
         }
+
     }
     public void PlayerMovement()
     {
@@ -290,6 +293,7 @@ public class PlayerController : MonoBehaviour
         if (collider.gameObject.tag == "Food")
         {
             fullnessPercentage += 5;
+            timeRemaining += 3;
             collider.gameObject.SetActive(false);
         }
     }
