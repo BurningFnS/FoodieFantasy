@@ -148,3 +148,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 0.574
   size: 16
+  filling: 7
