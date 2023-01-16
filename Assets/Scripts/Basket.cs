@@ -164,8 +164,10 @@ public class Basket : MonoBehaviour
 
             float s = groceries.size;
 
+            cap -= s;
+
             //This is to spawn spoiled food and get values.
-            if ((cap -= s) < 0)
+            if ((cap - s) < 0)
             {
                 for (int i = (int)cap; i < 0; i = i + 2)
                 {
@@ -182,7 +184,7 @@ public class Basket : MonoBehaviour
             //ItemList.Add(gameObject.name);
             //Debug.Log("ItemList Count: " + ItemList.Count);
 
-            cap -= s;
+            
 
             capacityText.text = "Basket Capacity: " + (cap).ToString() + "%";
             groceryListUI.text = "Groceries: " + string.Join(", ", foodList);
