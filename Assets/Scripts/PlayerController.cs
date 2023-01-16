@@ -120,11 +120,11 @@ public class PlayerController : MonoBehaviour
         if (isBoostTimer)
         {
             jumpBoostTimer -= Time.smoothDeltaTime;
-            jumpForce = 550f;
+            jumpForce = 600f;
         }
         if (jumpBoostTimer <= 0f)
         {
-            jumpForce = 350f;
+            jumpForce = 410f;
             jumpBoostTimer = 3.0f;
             isBoostTimer = false;
         }
