@@ -15,8 +15,9 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpAudio;
     public AudioSource eatingAudio;
 
-    public int fullnessPercentage;
+    public float fullnessPercentage;
     public float timeRemaining;
+
 
     //These variables are for power ups
     //Jump boost
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     //---------------------------------//
     public Transform groundCheck;
 
+    Groceries groceries;
     [HideInInspector]
     public bool grounded = false;
 
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
     RectTransform _PanelEnd, _PanelStart, _Transparent;
     [SerializeField]
     Button _Continue;
+    [SerializeField] Slider slider;
 
     void Awake()
     {
@@ -63,6 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         Button continueBtn = _Continue.GetComponent<Button>();
         continueBtn.onClick.AddListener(Resume);
+        slider.maxValue = 50f;
 
         anim = GetComponent<Animator>();
         anim.SetTrigger("idle");
@@ -116,17 +120,17 @@ public class PlayerController : MonoBehaviour
         if (isBoostTimer)
         {
             jumpBoostTimer -= Time.smoothDeltaTime;
-            jumpForce = 550f;
+            jumpForce = 600f;
         }
         if (jumpBoostTimer <= 0f)
         {
-            jumpForce = 350f;
+            jumpForce = 410f;
             jumpBoostTimer = 3.0f;
             isBoostTimer = false;
         }
         //-----------------------//
 
-        FullnessText.text = "Fullness: " + fullnessPercentage;
+        FullnessText.text = "Fullness: " + fullnessPercentage + "%";
 
         if(timeRemaining > 0)
         {
@@ -159,6 +163,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
+        //Vector3 horizontal = new Vector3(h,)
         if (h != 0 && !anim.GetBool("isJump"))
         {
             anim.SetBool("isRun", true);
@@ -242,7 +247,11 @@ public class PlayerController : MonoBehaviour
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
-            fullnessPercentage += 5;
+            groceries = collider.gameObject.GetComponent<Groceries>();
+            float filling = groceries.filling;
+
+            fullnessPercentage += filling;
+            slider.value += groceries.filling;
             collider.gameObject.SetActive(false);
         }
     }
