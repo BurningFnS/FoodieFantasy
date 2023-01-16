@@ -31,6 +31,11 @@ public class Basket : MonoBehaviour
     public Text capacityText;
     public TextMeshProUGUI groceryListUI;
 
+    //movement variables//
+    private bool moveLeft = false;
+    private bool moveRight = false;
+    private float horizontalMove;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +45,16 @@ public class Basket : MonoBehaviour
         platformSpawn = gamemanager.platformSpawn;
         maxPlatforms = gamemanager.maxPlatforms;
         platformList = gamemanager.platformList;
+
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         BasketMovement();
+        keyboardBasketMovement();
+        rb.velocity = new Vector2(horizontalMove, rb.velocity.y);
 
     }
 
@@ -60,12 +69,27 @@ public class Basket : MonoBehaviour
             isBasketFull = false;
         }
     }
-
-    void BasketMovement()
+    public void TouchDownLeft()
+    {
+        moveLeft = true;
+    }
+    public void TouchUpLeft()
+    {
+        moveLeft = false;
+    }
+    public void TouchDownRight()
+    {
+        moveRight = true;
+    }
+    public void TouchUpRight()
+    {
+        moveRight = false;
+    }
+    void keyboardBasketMovement()
     {
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
 
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
             isMoving = true;
         }
@@ -74,7 +98,7 @@ public class Basket : MonoBehaviour
             isMoving = false;
         }
 
-        if(isMoving == false)
+        if (isMoving == false)
         {
             rb.velocity = Vector3.zero;
         }
@@ -82,10 +106,54 @@ public class Basket : MonoBehaviour
         {
             rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
         }
-        
-        
+
+
         //transform.position += horizontal * speed * Time.deltaTime;
     }
+    public void BasketMovement()
+    {
+        if (moveLeft)
+        {
+            isMoving = true;
+            horizontalMove = -speed;
+        }
+        else if (moveRight)
+        {
+            isMoving = true;
+            horizontalMove = speed;  
+        }
+        else
+        {
+            isMoving = false;
+            horizontalMove = 0;
+        }
+    }
+
+    //public void BasketMovement(){
+    //{
+    //    Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+
+    //    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+    //    {
+    //        isMoving = true;
+    //    }
+    //    else
+    //    {
+    //        isMoving = false;
+    //    }
+
+    //    if(isMoving == false)
+    //    {
+    //        rb.velocity = Vector3.zero;
+    //    }
+    //    else
+    //    {
+    //        rb.MovePosition(transform.position + horizontal * Time.deltaTime * speed);
+    //    }
+        
+        
+    //    //transform.position += horizontal * speed * Time.deltaTime;
+    //}
 
     void OnTriggerEnter2D(Collider2D other)
     {
