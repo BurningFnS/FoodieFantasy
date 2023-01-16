@@ -9,6 +9,7 @@ public class Groceries : MonoBehaviour
     float height;
     float speed = 7f;
     public float size;
+    public float filling;
 
     // Start is called before the first frame update
     void Start()

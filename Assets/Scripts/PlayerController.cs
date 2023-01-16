@@ -15,8 +15,9 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpAudio;
     public AudioSource eatingAudio;
 
-    public int fullnessPercentage;
+    public float fullnessPercentage;
     public float timeRemaining;
+
 
     //These variables are for power ups
     //Jump boost
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     //---------------------------------//
     public Transform groundCheck;
 
+    Groceries groceries;
     [HideInInspector]
     public bool grounded = false;
 
@@ -128,7 +130,7 @@ public class PlayerController : MonoBehaviour
         }
         //-----------------------//
 
-        FullnessText.text = "Fullness: " + fullnessPercentage;
+        FullnessText.text = "Fullness: " + fullnessPercentage + "%";
 
         if(timeRemaining > 0)
         {
@@ -161,6 +163,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
+        //Vector3 horizontal = new Vector3(h,)
         if (h != 0 && !anim.GetBool("isJump"))
         {
             anim.SetBool("isRun", true);
@@ -244,8 +247,11 @@ public class PlayerController : MonoBehaviour
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
-            fullnessPercentage += 5;
-            slider.value += 5f;
+            groceries = collider.gameObject.GetComponent<Groceries>();
+            float filling = groceries.filling;
+
+            fullnessPercentage += filling;
+            slider.value += groceries.filling;
             collider.gameObject.SetActive(false);
         }
     }
