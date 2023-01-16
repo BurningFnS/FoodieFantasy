@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     RectTransform _PanelEnd, _PanelStart, _Transparent;
     [SerializeField]
     Button _Continue;
+    [SerializeField] Slider slider;
 
     void Awake()
     {
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         Button continueBtn = _Continue.GetComponent<Button>();
         continueBtn.onClick.AddListener(Resume);
+        slider.maxValue = 50f;
 
         anim = GetComponent<Animator>();
         anim.SetTrigger("idle");
@@ -243,6 +245,7 @@ public class PlayerController : MonoBehaviour
         if (collider.gameObject.tag == "Food")
         {
             fullnessPercentage += 5;
+            slider.value += 5f;
             collider.gameObject.SetActive(false);
         }
     }
