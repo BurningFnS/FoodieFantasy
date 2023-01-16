@@ -289,11 +289,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
         // General food collection
         if (collider.gameObject.tag == "Food")
         {
             fullnessPercentage += 5;
-            timeRemaining += 3;
+            timeRemaining += 5;
+            collider.gameObject.SetActive(false);
+        }
+
+        // General Spoiled Food collection
+        if (collider.gameObject.tag == "Spoiled Food")
+        {
+            fullnessPercentage -= 5;
+            timeRemaining -= 2;
             collider.gameObject.SetActive(false);
         }
     }
