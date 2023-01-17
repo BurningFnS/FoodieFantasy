@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool jump = false;
 
     public float moveForce = 365f;
-    public float maxSpeed = 5f;
+    public float maxSpeed = 3f;
     public float jumpForce = 1000f;
     public AudioSource jumpAudio;
     public AudioSource eatingAudio;
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour
     private bool isDoubleJumpTrue = false;
     private bool hasDoubleJumped = false;
 
+    // Blinded Debuff
+    private float blindedTimer = 3.0f;
+    private bool isBlinded = false;
+    public GameObject _BlindnessOverlay;
     //---------------------------------//
     public Transform groundCheck;
 
@@ -44,8 +49,6 @@ public class PlayerController : MonoBehaviour
     Text TimingText, FullnessText, _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage, _Score;
     [SerializeField]
     RectTransform _PanelEnd, _PanelStart, _Transparent;
-    [SerializeField]
-    Button _Continue;
     [SerializeField] Slider slider;
 
 
@@ -58,25 +61,23 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        timeRemaining = 10f;
+        timeRemaining = 20f;
         fullnessPercentage = 0;
 
         _PanelEnd.gameObject.SetActive(false);
         _Transparent.gameObject.SetActive(false);
         _PanelStart.gameObject.SetActive(true);
 
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Button continueBtn = _Continue.GetComponent<Button>();
-        continueBtn.onClick.AddListener(Resume);
         slider.maxValue = 50f;
 
         anim = GetComponent<Animator>();
         anim.SetTrigger("idle");
+        _BlindnessOverlay.SetActive(false);
     }
 
     // Update is called once per frame
@@ -137,6 +138,19 @@ public class PlayerController : MonoBehaviour
         }
         //-----------------------//
 
+        //-------Blindness Debuff------//
+        if (isBlinded)
+        {
+            _BlindnessOverlay.SetActive(true);
+            blindedTimer -= Time.smoothDeltaTime;
+        }
+        if (blindedTimer <= 0f)
+        {
+            isBlinded = false;
+            _BlindnessOverlay.SetActive(false);
+            blindedTimer = 3.0f;
+        }
+        //-----------------------//
         FullnessText.text = "Fullness: " + fullnessPercentage + "%";
 
         if(timeRemaining > 0)
@@ -152,9 +166,9 @@ public class PlayerController : MonoBehaviour
             _Transparent.gameObject.SetActive(true);
             _PanelStart.gameObject.SetActive(false);
             _FoodConsumed.text = "Food Consumed: " + fullnessPercentage * 5;
-            _FoodWasted.text = "Food Wasted: -" + 100;
-            _TotalScore.text = "Total Score : " + ((fullnessPercentage * 5) - 100);
-            if(((fullnessPercentage * 5) - 100) >= 100)
+            _FoodWasted.text = "Food Wasted: -" + Basket.spoiledfoodamount * 2;
+            _TotalScore.text = "Total Score : " + ((fullnessPercentage * 5) - Basket.spoiledfoodamount * 2);
+            if(((fullnessPercentage * 5) - Basket.spoiledfoodamount * 2) >= 50)
             {
                 _GoodMessage.gameObject.SetActive(true);
                 _BadMessage.gameObject.SetActive(false);
@@ -301,6 +315,7 @@ public class PlayerController : MonoBehaviour
             groceries = collider.gameObject.GetComponent<Groceries>();
             float filling = groceries.filling;
 
+            timeRemaining += 5;
             fullnessPercentage += filling;
             slider.value += groceries.filling;
 			collider.gameObject.SetActive(false);
@@ -309,19 +324,28 @@ public class PlayerController : MonoBehaviour
         // General Spoiled Food collection
         if (collider.gameObject.tag == "Spoiled Food")
         {
-            fullnessPercentage -= 5;
-            timeRemaining -= 2;
-            collider.gameObject.SetActive(false);
+            if (isBlinded)
+            {
+                blindedTimer += 3.0f;
+                Debug.Log("You have consumed a spoiled food, debuff time extention.");
+
+            }
+            else
+            {
+                isBlinded = true;            
+                fullnessPercentage -= 5;
+                timeRemaining -= 2;
+                collider.gameObject.SetActive(false);
+                Debug.Log("You have consumed a spoiled food and received a debuff.");
+
+            }
         }
     }
 
-    void Resume()
+    public void ReturnMainMenu()
     {
-        Time.timeScale = 1f;
-        timeRemaining += 999f;
-        _PanelEnd.gameObject.SetActive(false);
-        _Transparent.gameObject.SetActive(false);
-        _PanelStart.gameObject.SetActive(true);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
         Debug.Log("The game will not be continued as it has not been implemented further.");
     }
 

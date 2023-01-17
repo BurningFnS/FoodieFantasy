@@ -23,7 +23,7 @@ public class Basket : MonoBehaviour
     bool isMoving = false;
 
     float cap = 100;
-    int spoiledfoodamount = 0;
+    public static int spoiledfoodamount = 0;
 
     [HideInInspector]
     public bool isBasketFull = false;
