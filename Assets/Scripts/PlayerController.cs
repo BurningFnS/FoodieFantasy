@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Collider2D hit = Physics2D.OverlapCircle(this.gameObject.transform.position, 10f);
+        Collider2D hit = Physics2D.OverlapCircle(this.gameObject.transform.position, 3f);
         if (hit.gameObject.layer == 12 && !hasTutorial1Ran) 
         {
                 hasTutorial1Ran = true;
@@ -355,6 +355,7 @@ public class PlayerController : MonoBehaviour
                 fullnessPercentage -= 5;
                 timeRemaining -= 2;
                 collider.gameObject.SetActive(false);
+                slider.value -= 5;
                 Debug.Log("You have consumed a spoiled food and received a debuff.");
 
             }
