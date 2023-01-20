@@ -21,6 +21,7 @@ public class Groceries : MonoBehaviour
     void FixedUpdate()
     {
         GroceriesFalling();
+ 
     }
 
     void GroceriesFalling()

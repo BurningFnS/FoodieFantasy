@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-   public void StartGame()
+    public RectTransform DropperPanel;
+    public RectTransform FirstPanel;
+    public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
     }
@@ -17,4 +19,11 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void OnClickButton()
+    {
+      DropperPanel.gameObject.SetActive(false);
+      FirstPanel.gameObject.SetActive(true);
+        
+    }
+
 }
