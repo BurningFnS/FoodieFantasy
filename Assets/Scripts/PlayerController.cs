@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     Text TimingText, FullnessText, _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage, _Score;
     [SerializeField]
     RectTransform _PanelEnd, _PanelStart, _Transparent;
+    [SerializeField] Button _Tutorial1, _Tutorial2;
     [SerializeField] Slider slider;
 
 
@@ -57,6 +58,9 @@ public class PlayerController : MonoBehaviour
     private bool moveRight = false;
     private float horizontalMove;
     private float speed = 1f;
+
+    //Variables used for tutorial//
+    bool hasTutorial1Ran = false;
 
     void Awake()
     {
@@ -78,6 +82,10 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         anim.SetTrigger("idle");
         _BlindnessOverlay.SetActive(false);
+        _Tutorial1.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+
+        
     }
 
     // Update is called once per frame
@@ -151,6 +159,8 @@ public class PlayerController : MonoBehaviour
             blindedTimer = 3.0f;
         }
         //-----------------------//
+
+
         FullnessText.text = "Fullness: " + fullnessPercentage + "%";
 
         if(timeRemaining > 0)
@@ -178,6 +188,15 @@ public class PlayerController : MonoBehaviour
                 _BadMessage.gameObject.SetActive(true);
                 _GoodMessage.gameObject.SetActive(false);
             }
+        }
+
+        Collider2D hit = Physics2D.OverlapCircle(this.gameObject.transform.position, 10f);
+        if (hit.gameObject.layer == 12 && !hasTutorial1Ran) 
+        {
+                hasTutorial1Ran = true;
+                _Tutorial2.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+
         }
 
     }
@@ -390,5 +409,16 @@ public class PlayerController : MonoBehaviour
     public void TouchUpJump()
     {
 
+    }
+
+    public void runTutorial1()
+    {
+        _Tutorial1.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    public void runTutorial2()
+    {
+        _Tutorial2.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

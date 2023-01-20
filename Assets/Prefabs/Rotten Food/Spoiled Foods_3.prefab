@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2359124883368567752}
   - component: {fileID: 9118327962011731174}
   - component: {fileID: -1481510659311990042}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Spoiled Foods_3
   m_TagString: Spoiled Food
   m_Icon: {fileID: 0}
