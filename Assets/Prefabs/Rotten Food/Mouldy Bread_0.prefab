@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 186948125892303974}
   - component: {fileID: -3570082383409709777}
   - component: {fileID: -7831968524801832847}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mouldy Bread_0
   m_TagString: Spoiled Food
   m_Icon: {fileID: 0}

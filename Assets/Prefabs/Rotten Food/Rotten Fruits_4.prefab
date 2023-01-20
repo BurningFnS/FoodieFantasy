@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7425715004345111449}
   - component: {fileID: 5074116334069451667}
   - component: {fileID: -7535920868936392809}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Rotten Fruits_4
   m_TagString: Spoiled Food
   m_Icon: {fileID: 0}
