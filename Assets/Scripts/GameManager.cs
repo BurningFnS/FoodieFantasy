@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject platformerCamera;
     public GameObject dropperCanvas;
     public GameObject platformerCanvas;
+    public GameObject TutorialPanel;
 
     [HideInInspector] public float platformLength;
     public int maxPlatforms = 30;
@@ -70,7 +71,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         isDropperRunning = GameLoop();
-        StartCoroutine(isDropperRunning);
+      
+        
+            StartCoroutine(isDropperRunning);
+        
+
 
         CalculateGameDimensions();
 
