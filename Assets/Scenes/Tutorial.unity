@@ -646,7 +646,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lowest Capacity iin basket when collected (2%)
+  m_Text: Lowest Capacity in basket when collected (2%)
 --- !u!222 &334201012
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2089,7 +2089,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Highest Capacity iin basket when collected (24%)
+  m_Text: Highest Capacity in basket when collected (24%)
 --- !u!222 &1667899434
 CanvasRenderer:
   m_ObjectHideFlags: 0
