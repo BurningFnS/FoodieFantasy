@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Text TimingText, FullnessText, _FoodConsumed, _FoodWasted, _TotalScore, _GoodMessage, _BadMessage, _Score;
     [SerializeField]
-    RectTransform _PanelEnd, _PanelStart, _Transparent;
-    [SerializeField] Button _Tutorial1, _Tutorial2;
+    RectTransform _PanelEnd, _PanelStart, _Transparent, _PanelPaused;
+    [SerializeField] Button _Tutorial1, _Tutorial2, _PauseBtn;
     [SerializeField] Slider slider;
 
 
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
         _PanelEnd.gameObject.SetActive(false);
         _Transparent.gameObject.SetActive(false);
         _PanelStart.gameObject.SetActive(true);
+        _PanelPaused.gameObject.SetActive(false);
 
     }
 
@@ -421,5 +422,10 @@ public class PlayerController : MonoBehaviour
     {
         _Tutorial2.gameObject.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    public void pausedGame()
+    {
+
     }
 }
