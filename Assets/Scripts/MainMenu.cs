@@ -20,6 +20,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void onClickBlueButton()
+    {
+        SceneManager.LoadScene("BasketCapacity");
+    }
     public void OnClickButton()
     {
       DropperPanel.gameObject.SetActive(false);
