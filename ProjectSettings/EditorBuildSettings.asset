@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 3625d3494b8f7754ea53a4987be43b0c
+  - enabled: 1
+    path: Assets/Scenes/BasketCapacity.unity
+    guid: 47bb9ce5a99b2da4da79b161b5e9304a
   m_configObjects: {}

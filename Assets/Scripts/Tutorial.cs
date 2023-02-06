@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class Tutorial : MonoBehaviour
 {
@@ -22,6 +22,10 @@ public class Tutorial : MonoBehaviour
         Time.timeScale = 1;
        
 
+    }
+    void OnClickButton()
+    {
+        SceneManager.LoadScene("BasketCapacity");
     }
     IEnumerator PanelAppear()
     {
